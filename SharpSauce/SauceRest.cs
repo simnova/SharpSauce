@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace SauceLabs
+namespace SharpSauce
 {
     /// <summary>
     /// Forked from https://github.com/binken/SauceREST-DotNet/blob/master/SauceREST.cs

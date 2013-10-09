@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 
-namespace SauceLabs
+namespace SharpSauce
 {
     public class SauceLabs
     {

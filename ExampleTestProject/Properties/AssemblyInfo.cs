@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharpSauce")]
-[assembly: AssemblyDescription("A small C# library to help make running Selenium tests in SauceLabs easier.")]
+[assembly: AssemblyTitle("ExampleTestProject")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Simnova")]
-[assembly: AssemblyProduct("SharpSauce")]
+[assembly: AssemblyProduct("ExampleTestProject")]
 [assembly: AssemblyCopyright("Copyright Simnova©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5416f5a3-5555-4290-beaf-6f84f2375d17")]
+[assembly: Guid("bb59b718-e29f-4be5-ad49-6dc7307c7092")]
 
 // Version information for an assembly consists of the following four values:
 //

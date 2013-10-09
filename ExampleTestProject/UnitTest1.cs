@@ -5,6 +5,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using SharpSauce;
+using System.IO;
+using System.Windows;
 
 namespace ExampleTestProject
 {
@@ -36,6 +38,7 @@ namespace ExampleTestProject
             return driver;
         }
 
+
         public SauceLabsDriver RemoteTest(SauceLabs.BrowserVersions version, string screenResolution, string testName)
         {
             var sauceLabs = new SauceLabs(UserName, AccessKey);
@@ -46,7 +49,7 @@ namespace ExampleTestProject
         [TestMethod]
         public void TestIeLocal()
         {
-            var driver = LocalTest("ie");
+            var driver = LocalTest("firefox");
             Assert.IsTrue(RunTestCase(driver));
         }
 
@@ -62,11 +65,13 @@ namespace ExampleTestProject
         private bool RunTestCase(IWebDriver driver)
         {
             driver.Navigate().GoToUrl("http://www.google.com/");
-            driver.FindElement(By.Id("gbqfq")).Clear();
-            driver.FindElement(By.Id("gbqfq")).SendKeys("Selenium");
+            
+            driver.FindElement(By.CssSelector("input[type=text]")).Clear();
+            driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();
-            var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
-
+            //var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
+            //var results = driver.FindElement(By.CssSelector("a[href=http://docs.seleniumhq.org/]"));
+            var results = driver.FindElement(By.XPath("//*[@id=\"rso\"]/li[1]/div/h3/a"));
             return results != null;
         }
     }

@@ -36,13 +36,6 @@ namespace ExampleTestProject
             return driver;
         }
 
-        public SauceLabsDriver RemoteTest(SauceLabs.BrowserVersions version, string screenResolution, string testName)
-        {
-            var sauceLabs = new SauceLabs(UserName, AccessKey);
-            var driver = sauceLabs.GetRemoteDriver(version, testName, screenResolution, Timeout);
-            return driver;
-        }
-
         [TestMethod]
         public void TestIeLocal()
         {
@@ -54,7 +47,12 @@ namespace ExampleTestProject
         public void TestIeRemote()
         {
             var sauceLabs = new SauceLabs(UserName, AccessKey);
-            var driver = RemoteTest(SauceLabs.BrowserVersions.ie9win7, "1024x768","Google search for Selenium");
+            var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig{
+                BrowserVersion = SauceLabs.BrowserVersions.ie9win7,
+                TestName = "Google search for Selenium",
+                ScreenResolution = SauceLabs.ScreenResolutions.screen1024x768,
+                Timeout = 40
+            });
             var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
             Assert.IsTrue(results);
         }
@@ -62,9 +60,9 @@ namespace ExampleTestProject
         private bool RunTestCase(IWebDriver driver)
         {
             driver.Navigate().GoToUrl("http://www.google.com/");
-            driver.FindElement(By.Id("gbqfq")).Clear();
-            driver.FindElement(By.Id("gbqfq")).SendKeys("Selenium");
-            driver.FindElement(By.Id("gbqfb")).Click();
+            driver.FindElement(By.CssSelector("input[type=text]")).Clear();
+            driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
+            driver.FindElement(By.CssSelector("input[type=text]")).Click();
             var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
 
             return results != null;

@@ -7,6 +7,7 @@ using OpenQA.Selenium.IE;
 using SharpSauce;
 using System.IO;
 using System.Windows;
+using System.Threading;
 
 namespace ExampleTestProject
 {
@@ -69,9 +70,8 @@ namespace ExampleTestProject
             driver.FindElement(By.CssSelector("input[type=text]")).Clear();
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();
-            //var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
-            //var results = driver.FindElement(By.CssSelector("a[href=http://docs.seleniumhq.org/]"));
-            var results = driver.FindElement(By.XPath("//*[@id=\"rso\"]/li[1]/div/h3/a"));
+            Thread.Sleep(3000); //Pauses the test for three seconds to allow for the page to update with search results.
+            var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
             return results != null;
         }
     }

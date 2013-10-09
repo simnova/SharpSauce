@@ -13,8 +13,6 @@ namespace ExampleTestProject
     {
         private const string UserName = "yourSeleniumUserName";
         private const string AccessKey = "yourSeleniumAccessKey";
-        private const int Timeout = 45;
-
 
         public IWebDriver LocalTest(string browser)
         {
@@ -36,10 +34,11 @@ namespace ExampleTestProject
             return driver;
         }
 
+
         [TestMethod]
-        public void TestIeLocal()
+        public void TestFirefoxLocal()
         {
-            var driver = LocalTest("ie");
+            var driver = LocalTest("firefox");
             Assert.IsTrue(RunTestCase(driver));
         }
 
@@ -63,8 +62,8 @@ namespace ExampleTestProject
             driver.FindElement(By.CssSelector("input[type=text]")).Clear();
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.CssSelector("input[type=text]")).Click();
-            var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
 
+            var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
             return results != null;
         }
     }

@@ -64,8 +64,8 @@ namespace ExampleTestProject
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-            var LinkElement = wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText("Selenium - Web Browser Automation")));
-            var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
+            var results = wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText("Selenium - Web Browser Automation")));
+           // var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
             return results != null;
         }
     }

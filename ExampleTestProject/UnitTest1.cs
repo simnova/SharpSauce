@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Support.UI;
 using SharpSauce;
 using System.IO;
 using System.Windows;
@@ -48,7 +49,7 @@ namespace ExampleTestProject
         }
 
         [TestMethod]
-        public void TestIeLocal()
+        public void TestFirefoxLocal()
         {
             var driver = LocalTest("firefox");
             Assert.IsTrue(RunTestCase(driver));
@@ -70,7 +71,8 @@ namespace ExampleTestProject
             driver.FindElement(By.CssSelector("input[type=text]")).Clear();
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();
-            Thread.Sleep(3000); //Pauses the test for three seconds to allow for the page to update with search results.
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            var LinkElement = wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText("Selenium - Web Browser Automation")));
             var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
             return results != null;
         }

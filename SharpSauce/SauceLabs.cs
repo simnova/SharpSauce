@@ -9,6 +9,14 @@ namespace SharpSauce
         private readonly string _userName;
         private readonly string _accessKey;
 
+        public enum ScreenResolutions
+        {
+            screen800x600,
+            screen1024x768,
+            screen1280x1024,
+            screenDefault
+        }
+
         public enum BrowserVersions
         {
             // ReSharper disable InconsistentNaming
@@ -175,12 +183,50 @@ namespace SharpSauce
             return results;
         }
 
-        public SauceLabsDriver GetRemoteDriver(BrowserVersions version, string name, string screenRes, int timeout)
+        public class SauceLabsConfig
+        {
+            private ScreenResolutions _sceenResolution;
+            private ScreenOrientation _screenOrientation;
+            private BrowserVersions _broswerVersion;
+            private int _timeout;
+            private string _testName;
+
+            public ScreenResolutions ScreenResolution
+            {
+                get { return _sceenResolution; }
+                set { _sceenResolution = value; }
+            }
+
+            public ScreenOrientation ScreenOrientation
+            {
+                get { return _screenOrientation; }
+                set { _screenOrientation = value; }
+            }
+
+            public BrowserVersions BrowserVersion
+            {
+                get { return _broswerVersion; }
+                set { _broswerVersion = value; }
+            }
+
+            public int Timeout
+            {
+                get { return _timeout; }
+                set { _timeout = value; }
+            }
+            public string TestName
+            {
+                get { return _testName; }
+                set { _testName = value; }
+            }
+        }
+
+        public SauceLabsDriver GetRemoteDriver(SauceLabsConfig config)
         {
             
             DesiredCapabilities caps;
             
-            var versionName = version.ToString();
+            var versionName = config.BrowserVersion.ToString();
             if (versionName.StartsWith("ie"))
             {
                 caps = DesiredCapabilities.InternetExplorer();
@@ -220,9 +266,9 @@ namespace SharpSauce
             }
 
 
-            caps.SetCapability("name", name + " on " + versionName);
+            caps.SetCapability("name", config.TestName + " on " + versionName);
 
-            switch (version)
+            switch (config.BrowserVersion)
             {
                 case BrowserVersions.ie10win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
@@ -761,10 +807,25 @@ namespace SharpSauce
                     break;
             }
 
+            switch (config.ScreenResolution)
+            {
+                case ScreenResolutions.screen1024x768:
+                    caps.SetCapability("screen-resolution", "1024x768");
+                    break;
+                case ScreenResolutions.screen1280x1024:
+                    caps.SetCapability("screen-resolution", "1280x1024");
+                    break;
+                case ScreenResolutions.screen800x600:
+                    caps.SetCapability("screen-resolution", "800x600");
+                    break;
+                case ScreenResolutions.screenDefault:
+                default:
+                    break;
+            }
+
             caps.SetCapability("username", _userName);
             caps.SetCapability("accessKey", _accessKey);
-            caps.SetCapability("screen-resolution", screenRes);
-            caps.SetCapability("idle-timeout", timeout);
+            caps.SetCapability("idle-timeout", config.Timeout);
             var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps);
             return driver;
         }

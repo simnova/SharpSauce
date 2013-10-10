@@ -44,6 +44,13 @@ namespace ExampleTestProject
         }
 
         [TestMethod]
+        public void TestChromelocal()
+        {
+            var driver = LocalTest("chrome");
+            Assert.IsTrue(RunTestCase(driver));
+        }
+
+        [TestMethod]
         public void TestIeRemote()
         {
             var sauceLabs = new SauceLabs(UserName, AccessKey);

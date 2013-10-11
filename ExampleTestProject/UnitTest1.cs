@@ -21,7 +21,7 @@ namespace ExampleTestProject
             switch (browser)
             {
                 case "chrome":
-                    driver = new ChromeDriver();
+                    driver = new ChromeDriver(@"C:\Files\GitHub\SharpSauce\ExampleTestProject");
                     break;
                 case "firefox":
                     driver = new FirefoxDriver();
@@ -35,7 +35,7 @@ namespace ExampleTestProject
             return driver;
         }
 
-
+        
         [TestMethod]
         public void TestFirefoxLocal()
         {
@@ -50,6 +50,12 @@ namespace ExampleTestProject
             Assert.IsTrue(RunTestCase(driver));
         }
 
+        [TestMethod]
+        public void TestIelocal()
+        {
+            var driver = LocalTest("ie");
+            Assert.IsTrue(RunTestCase(driver));
+        }
         [TestMethod]
         public void TestIeRemote()
         {
@@ -67,6 +73,7 @@ namespace ExampleTestProject
         private bool RunTestCase(IWebDriver driver)
         {
             driver.Navigate().GoToUrl("http://www.google.com/");
+            
             driver.FindElement(By.CssSelector("input[type=text]")).Clear();
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();

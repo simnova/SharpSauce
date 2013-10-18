@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium.Remote;
 
+
 namespace SharpSauce
 {
     public class SauceLabsDriver : RemoteWebDriver

@@ -12,8 +12,8 @@ namespace ExampleTestProject
     [TestClass]
     public class UnitTest1
     {
-        private const string UserName = "yourSeleniumUserName";
-        private const string AccessKey = "yourSeleniumAccessKey";
+        private const string UserName = "matthew_walker";
+        private const string AccessKey = "e2ac55e0-9e26-47f6-96ae-3d4ffcc37c47";
 
         public IWebDriver LocalTest(string browser)
         {
@@ -27,7 +27,7 @@ namespace ExampleTestProject
                     driver = new FirefoxDriver();
                     break;
                 case "ie":
-                default:
+                default: 
                     driver = new InternetExplorerDriver();
                     break;
 
@@ -56,9 +56,11 @@ namespace ExampleTestProject
             var driver = LocalTest("ie");
             Assert.IsTrue(RunTestCase(driver));
         }
+
         [TestMethod]
         public void TestIeRemote()
         {
+            //SauceLabsDriver driver;
             var sauceLabs = new SauceLabs(UserName, AccessKey);
             var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig{
                 BrowserVersion = SauceLabs.BrowserVersions.ie9win7,
@@ -73,11 +75,11 @@ namespace ExampleTestProject
         private bool RunTestCase(IWebDriver driver)
         {
             driver.Navigate().GoToUrl("http://www.google.com/");
-            
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+           // var delay = wait.Until(ExpectedConditions.ElementExists(By.CssSelector("input[autocomplete=\"off\"]")));
             driver.FindElement(By.CssSelector("input[type=text]")).Clear();
             driver.FindElement(By.CssSelector("input[type=text]")).SendKeys("Selenium");
             driver.FindElement(By.Id("gbqfb")).Click();
-            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
             var results = wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText("Selenium - Web Browser Automation")));
            // var results = driver.FindElement(By.LinkText("Selenium - Web Browser Automation"));
             return results != null;

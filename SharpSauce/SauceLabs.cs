@@ -822,7 +822,7 @@ namespace SharpSauce
                 default:
                     break;
             }
-
+            
             caps.SetCapability("username", _userName);
             caps.SetCapability("accessKey", _accessKey);
             caps.SetCapability("idle-timeout", config.Timeout);

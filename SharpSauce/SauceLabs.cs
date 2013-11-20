@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
+using System.Collections.Generic;
 
 namespace SharpSauce
 {
@@ -185,7 +186,8 @@ namespace SharpSauce
             // ReSharper restore InconsistentNaming
 
         }
-        public SauceLabs(string userName, string accessKey )
+
+        public SauceLabs(string userName, string accessKey)
         {
             _userName = userName;
             _accessKey = accessKey;
@@ -217,8 +219,9 @@ namespace SharpSauce
             private string _testName;
             private string _buildNumber;
             private string[] _tags;
-            private bool _recordVideo;
-            private bool _captureHTML;
+            private bool _recordVideo = true;
+            private bool _captureHTML = false;
+            private bool _recordScreenshots = true;
             private customData _customData;
 
             public ScreenResolutions ScreenResolution
@@ -268,6 +271,11 @@ namespace SharpSauce
             {
                 get { return _captureHTML; }
                 set { _captureHTML = value; }
+            }
+            public bool RecordScreenshots
+            {
+                get { return _recordScreenshots; }
+                set { _recordScreenshots = value; }
             }
             public customData CustomData
             {
@@ -1012,6 +1020,7 @@ namespace SharpSauce
             caps.SetCapability("tags", config.Tags);
             caps.SetCapability("record-video", config.RecordVideo);
             caps.SetCapability("capture-html", config.CaptureHTML);
+            caps.SetCapability("record-screenshots", config.RecordScreenshots);
             caps.SetCapability("custom-data", config.CustomData);
             var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps);
             return driver;

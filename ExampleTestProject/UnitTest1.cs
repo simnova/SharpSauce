@@ -16,7 +16,8 @@ namespace ExampleTestProject
     {
         //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
         private const string UserName = "username";
-        private const string AccessKey = "access key";
+        private const string AccessKey = "AccessKey";
+        private const bool recordvideo = false;
 
         public IWebDriver LocalTest(string browser)
         {
@@ -78,7 +79,7 @@ namespace ExampleTestProject
         }
 
         [TestMethod]
-        public void TestMobile()
+        public void TestCustomData()
         {
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
 
@@ -88,29 +89,53 @@ namespace ExampleTestProject
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
-                    TestName = "Simple navigation using login",
+                    TestName = "Unit Test CustomData",
                     ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
-                    ScreenOrientation = OpenQA.Selenium.ScreenOrientation.Landscape,
                     Timeout = 30,
-                    BuildNumber = "3",
-                    Tags = new string[] { "Video", "no Capture HTML", "Test" },
-                    RecordVideo = true,
-                    CaptureHTML = false,
-                    CustomData = new SauceLabs.customData
-                    {
-                        Release = "0.5",
-                        Staging = true
-                    }
+                    BuildNumber = "4",
+                    Tags = new string[] { "custom data", "screenshots", "video" },
+                    CustomData = new SauceLabs.customData{Staging = false, Release = "1.0" }
+
                 });
-
-                var results = sauceLabs.RunRemoteTestCase(driver, RunAdvancedTestCase);
-                Assert.IsTrue(results);
-
+                string jobID = driver.GetExecutionId();
+                var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
+                var ending = new SauceRest(UserName, AccessKey);
+                var confirmation = ending.RetrieveResults("jobs/" + jobID);
+                Assert.AreEqual("\"custom-data\": {\"Release\": \"1.0\", \"Commit\": null, \"Staging\": false, \"ExecutionNumber\": 0, \"Server\": null}", 
+                    confirmation.Substring(145, 105));
             }
         }
 
         [TestMethod]
-        public void TestRemote()
+        public void TestTags()
+        {
+            string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+
+            foreach (string line in lines)
+            {
+                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                {
+                    BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                    TestName = "Unit Test Tags",
+                    ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                    Timeout = 30,
+                    BuildNumber = "5",
+                    Tags = new string[] { "Tag test", "Retrieve Results" },
+                    RecordVideo = true,
+                    RecordScreenshots = true,
+
+                });
+                string jobID = driver.GetExecutionId();
+                var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
+                var ending = new SauceRest(UserName, AccessKey);
+                var confirmation = ending.RetrieveResults("jobs/" + jobID);
+                Assert.AreEqual("\"tags\": [\"Tag test\", \"Retrieve Results\"]", confirmation.Substring(427, 40));
+            }
+        }
+
+        [TestMethod]
+        public void TestAllDesktopBrowsers()
         {
 
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Desktop.txt");
@@ -125,7 +150,7 @@ namespace ExampleTestProject
                     ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
                     Timeout = 40,
                     BuildNumber = "2",
-                    Tags = new string[] { "Google", "Selenium" }
+                    Tags = new string[] { "Google", "Selenium", "All Desktop OS/browsers" }
                 });
 
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
@@ -133,6 +158,43 @@ namespace ExampleTestProject
 
             }
         }
+
+        [TestMethod]
+        public void TestBuildNumber()
+        {
+            string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+
+            foreach (string line in lines)
+            {
+                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                {
+                    BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                    TestName = "Unit Test BuildNumber",
+                    ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                    Timeout = 30,
+                    BuildNumber = "5",
+                    Tags = new string[] { "Build Number test" },
+
+                });
+                string jobID = driver.GetExecutionId();
+                var results = sauceLabs.RunRemoteTestCase(driver, RunloginTestCase);
+                var ending = new SauceRest(UserName, AccessKey);
+                var confirmation = ending.RetrieveResults("jobs/" + jobID);
+                Assert.AreEqual("\"build\": \"5\"", confirmation.Substring(356, 12));
+
+            }
+        }
+
+        [TestMethod]
+        public void TestLoginFirefoxLocal()
+        {
+            var driver = new FirefoxDriver();
+            login(driver);
+            var results = driver.FindElement(By.CssSelector("input[value=First]"));
+            Assert.IsTrue(results != null);
+        }
+        
 
         private IWebDriver login(IWebDriver driver)
         {
@@ -164,7 +226,7 @@ namespace ExampleTestProject
             return results != null;
         }
 
-        private bool RunAdvancedTestCase(IWebDriver driver)
+        private bool RunloginTestCase(IWebDriver driver)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
             driver = login(driver);

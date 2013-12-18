@@ -7,6 +7,7 @@ using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
 using SharpSauce;
+using System.Threading.Tasks;
 
 namespace ExampleTestProject
 {
@@ -18,6 +19,9 @@ namespace ExampleTestProject
         private const string UserName = "username";
         private const string AccessKey = "AccessKey";
         private const bool recordvideo = false;
+        //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown.
+        private const int timeoutInMinutes = 5;
+ 
 
         public IWebDriver LocalTest(string browser)
         {
@@ -40,19 +44,57 @@ namespace ExampleTestProject
             return driver;
         }
 
-        
+
+        [TestMethod]
+        public void parallelTestChromeFoxLocal()
+        {
+            IWebDriver driver;
+            Parallel.For(0, 2, i =>
+                {
+                    if (i == 0)
+                    {
+                        driver = LocalTest("chrome");
+                    }
+                    else
+                    {
+                        driver = LocalTest("firefox");
+                    }
+                    Assert.IsTrue(RunloginTestCase(driver));
+                }
+                
+            );
+        }
+
+        [TestMethod]
+        public void serialTestChromFoxLocal()
+        {
+            IWebDriver driver;
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == 0)
+                {
+                    driver = LocalTest("chrome");
+                }
+                else
+                {
+                    driver = LocalTest("firefox");
+                }
+                Assert.IsTrue(RunloginTestCase(driver));
+            }
+        }
+
         [TestMethod]
         public void TestFirefoxLocal()
         {
             var driver = LocalTest("firefox");
-            Assert.IsTrue(RunTestCase(driver));
+            Assert.IsTrue(RunTempTestCase(driver));
         }
 
         [TestMethod]
         public void TestChromelocal()
         {
             var driver = LocalTest("chrome");
-            Assert.IsTrue(RunTestCase(driver));
+            Assert.IsTrue(RunTempTestCase(driver));
         }
 
         [TestMethod]
@@ -106,6 +148,7 @@ namespace ExampleTestProject
             }
         }
 
+
         [TestMethod]
         public void TestTags()
         {
@@ -152,11 +195,62 @@ namespace ExampleTestProject
                     BuildNumber = "2",
                     Tags = new string[] { "Google", "Selenium", "All Desktop OS/browsers" }
                 });
+                var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
+                Assert.IsTrue(results);
+
+            }
+        }
+
+        [TestMethod]
+        public void TestSmallDesktopBrowsersParallel()
+        {
+
+            string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-small.txt");
+
+            Parallel.ForEach(lines, line =>
+            {
+                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                {
+                    BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                    TestName = "Google search for Selenium",
+                    ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                    Timeout = 40,
+                    BuildNumber = "6",
+                    Tags = new string[] { "parallel test", "compressed list", "extended timeout" }
+                });
 
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 Assert.IsTrue(results);
 
             }
+            );
+        }
+
+        [TestMethod]
+        public void TestSmallDesktopBrowsersSequential()
+        {
+
+            string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Small.txt");
+
+            foreach(string line in lines)
+            {
+                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                {
+                    BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                    TestName = "Google search for Selenium",
+                    ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                    Timeout = 40,
+                    BuildNumber = "6",
+                    Tags = new string[] {"sequential test", "compressed list", "extended timeout" }
+                });
+
+                var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
+                Assert.IsTrue(results);
+
+            }
+
         }
 
         [TestMethod]
@@ -184,6 +278,29 @@ namespace ExampleTestProject
                 Assert.AreEqual("\"build\": \"5\"", confirmation.Substring(356, 12));
 
             }
+        }
+
+        [TestMethod]
+        public void TestpersonalRemote()
+        {
+            string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-San.txt");
+            foreach (string line in lines)
+            {
+                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                {
+                    BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                    TestName = "test for jsfiddle.net",
+                    ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                    Timeout = 30,
+                    BuildNumber = "7",
+                    Tags = new string[] { "jsfiddle", "edit/confirm personal info", "safari" },
+
+                });
+                var results = sauceLabs.RunRemoteTestCase(driver, RuntextEntryTestCase);
+                Assert.IsTrue(results);
+            }
+
         }
 
         [TestMethod]
@@ -215,7 +332,7 @@ namespace ExampleTestProject
             driver.FindElement(By.Name("q")).SendKeys("Selenium");
             if(driver.FindElements(By.Id("gbqfb")).Count < 1)
             {
-                driver.FindElement(By.CssSelector("button[type=submit]")).Click();
+                driver.FindElement(By.CssSelector("input[type=submit]")).Click();
             }
             else
             {
@@ -236,7 +353,31 @@ namespace ExampleTestProject
             var results = driver.Title.Equals("Select a Flight: Mercury Tours");
             return results;
         }
+        private bool RunTempTestCase(IWebDriver driver)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            driver.Navigate().GoToUrl("http://jsfiddle.net/simnova/GnSU9/1/embedded/result/");
+            driver.SwitchTo().Frame(0);
+            //wait.Until(ExpectedConditions.ElementExists(By.Id("personalInfoPhone")));
+            driver.FindElement(By.Id("personalInfoPhone")).Clear();
+            driver.FindElement(By.Id("personalInfoPhone")).SendKeys("8015555555p");
+            //var results = driver.FindElement(By.Id("personalInfoPhone")).GetAttribute("value");
+            driver.FindElement(By.Id("personalInfoEmail")).Clear();
+            driver.FindElement(By.Id("personalInfoEmail")).SendKeys("fakeEmailnotreal.com");
+            driver.FindElement(By.Id("personalInfoConfirmButton")).Click();
+            var results = driver.FindElement(By.Id("personalInfoPhone")).GetAttribute("value");
+            return results == "8015555555p";
+        }
 
+        private bool RuntextEntryTestCase(SauceLabsDriver driver)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            driver.Navigate().GoToUrl("http://jsfiddle.net/simnova/GnSU9/1/embedded/result/");
+            driver.SwitchTo().Frame(0);
+            driver.loginByID("8015555555", "fakeEmail@notreal.com", "personalInfoPhone", "personalInfoEmail");
+            var results = driver.getElementValueByID("personalInfoPhone");
+            return results == "";
+        }
 
     }
 

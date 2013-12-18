@@ -9,6 +9,7 @@ namespace SharpSauce
     {
         private readonly string _userName;
         private readonly string _accessKey;
+        public int _timeout;
 
         public enum ScreenResolutions
         {
@@ -22,6 +23,37 @@ namespace SharpSauce
         {
             // ReSharper disable InconsistentNaming
             ie11win81,
+            ff3win81,
+            ff35win81,
+            ff36win81,
+            ff4win81,
+            ff5win81,
+            ff6win81,
+            ff7win81,
+            ff8win81,
+            ff9win81,
+            ff10win81,
+            ff11win81,
+            ff12win81,
+            ff13win81,
+            ff14win81,
+            ff15win81,
+            ff16win81,
+            ff17win81,
+            ff18win81,
+            ff19win81,
+            ff20win81,
+            ff21win81,
+            ff22win81,
+            ff23win81,
+            ff24win81,
+            ff25win81,
+            gc26win81,
+            gc27win81,
+            gc28win81,
+            gc29win81,
+            gc30win81,
+            gc31win81,
 
             andriod4,
             andriod4tablet,
@@ -62,7 +94,12 @@ namespace SharpSauce
             ff23win8,
             ff24win8,
             ff25win8,
+            gc26win8,
             gc27win8,
+            gc28win8,
+            gc29win8,
+            gc30win8,
+            gc31win8,
 
             ie8win7,
             ie9win7,
@@ -92,7 +129,12 @@ namespace SharpSauce
             ff23win7,
             ff24win7,
             ff25win7,
+            gc26win7,
             gc27win7,
+            gc28win7,
+            gc29win7,
+            gc30win7,
+            gc31win7,
             opera11win7,
             opera12win7,
             safari5win7,
@@ -125,8 +167,12 @@ namespace SharpSauce
             ff23winXP,
             ff24winXP,
             ff25winXP,
+            gc26winXP,
             gc27winXP,
+            gc28winXP,
             gc29winXP,
+            gc30winXP,
+            gc31winXP,
             opera11winXP,
             opera12winXP,
 
@@ -159,6 +205,9 @@ namespace SharpSauce
             gc27MountainLion,
             safari6MountainLion,
 
+            gc31Mavericks,
+            safari7Mavericks,
+
             ff3linux,
             ff4linux,
             ff5linux,
@@ -181,8 +230,13 @@ namespace SharpSauce
             ff22linux,
             ff23linux,
             ff24linux,
+            ff25linux,
             opera12linux,
-            gc28linux
+            gc26linux,
+            gc27linux,
+            gc28linux,
+            gc29linux,
+            gc30linux
             // ReSharper restore InconsistentNaming
 
         }
@@ -194,6 +248,23 @@ namespace SharpSauce
         }
 
         public bool RunRemoteTestCase(SauceLabsDriver driver, Func<IWebDriver,bool> testCaseToRun )
+        {
+            var sauceRest = new SauceRest(_userName, _accessKey);
+            var results = testCaseToRun(driver);
+            if (results)
+            {
+                sauceRest.JobPassed(driver.GetExecutionId());
+            }
+            else
+            {
+                sauceRest.JobFailed(driver.GetExecutionId());
+            }
+            driver.Quit();
+
+            return results;
+        }
+
+        public bool RunRemoteTestCase(SauceLabsDriver driver, Func<SauceLabsDriver, bool> testCaseToRun)
         {
             var sauceRest = new SauceRest(_userName, _accessKey);
             var results = testCaseToRun(driver);
@@ -319,6 +390,7 @@ namespace SharpSauce
             }
         }
 
+
         public SauceLabsDriver GetRemoteDriver(SauceLabsConfig config)
         {
             
@@ -368,54 +440,7 @@ namespace SharpSauce
 
             switch (config.BrowserVersion)
             {
-                case BrowserVersions.ie11win81:
-                    caps.SetCapability(CapabilityType.Platform, "WIN8.1");
-                    caps.SetCapability(CapabilityType.Version, "11");
-                    break;
-                case BrowserVersions.ie10win8:
-                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
-                    caps.SetCapability(CapabilityType.Version, "10");
-                    break;
-                case BrowserVersions.ie8win7:
-                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
-                    caps.SetCapability(CapabilityType.Version, "8");
-                    break;
-                case BrowserVersions.ie9win7:
-                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
-                    caps.SetCapability(CapabilityType.Version, "9");
-                    break;
-                case BrowserVersions.ie10win7:
-                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
-                    caps.SetCapability(CapabilityType.Version, "10");
-                    break;
-                case BrowserVersions.ie6winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "6");
-                    break;
-                case BrowserVersions.ie8winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "8");
-                    break;
-                case BrowserVersions.ie7winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "7");
-                    break;
-                case BrowserVersions.ff21winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "21");
-                    break;
-                case BrowserVersions.ff17winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "17");
-                    break;
-                case BrowserVersions.ff14winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "14");
-                    break;
-                case BrowserVersions.ff10winXP:
-                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
-                    caps.SetCapability(CapabilityType.Version, "10");
-                    break;
+                //Mobile and tablet browsers
                 case BrowserVersions.andriod4:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "4");
@@ -475,7 +500,140 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "4.3");
                     break;
-                    //Added Browsers
+                    //Windows 8.1 browsers
+                case BrowserVersions.ie11win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "11");
+                    break;
+                case BrowserVersions.ff3win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "3.0");
+                    break;
+                case BrowserVersions.ff35win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "3.5");
+                    break;
+                case BrowserVersions.ff36win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "3.6");
+                    break;
+                case BrowserVersions.ff4win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "4");
+                    break;
+                case BrowserVersions.ff5win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "5");
+                    break;
+                case BrowserVersions.ff6win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "6");
+                    break;
+                case BrowserVersions.ff7win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "7");
+                    break;
+                case BrowserVersions.ff8win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "8");
+                    break;
+                case BrowserVersions.ff9win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "9");
+                    break;
+                case BrowserVersions.ff10win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "10");
+                    break;
+                case BrowserVersions.ff11win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "11");
+                    break;
+                case BrowserVersions.ff12win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "12");
+                    break;
+                case BrowserVersions.ff13win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "13");
+                    break;
+                case BrowserVersions.ff14win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "14");
+                    break;
+                case BrowserVersions.ff15win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "15");
+                    break;
+                case BrowserVersions.ff16win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "16");
+                    break;
+                case BrowserVersions.ff17win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "17");
+                    break;
+                case BrowserVersions.ff18win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "18");
+                    break;
+                case BrowserVersions.ff19win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "19");
+                    break;
+                case BrowserVersions.ff20win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "20");
+                    break;
+                case BrowserVersions.ff21win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "21");
+                    break;
+                case BrowserVersions.ff22win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "22");
+                    break;
+                case BrowserVersions.ff23win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "23");
+                    break;
+                case BrowserVersions.ff24win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "24");
+                    break;
+                case BrowserVersions.ff25win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "25");
+                    break;
+                case BrowserVersions.gc26win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
+                case BrowserVersions.gc27win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "27");
+                    break;
+                case BrowserVersions.gc28win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
+                case BrowserVersions.gc29win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "29");
+                    break;
+                case BrowserVersions.gc30win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "30");
+                    break;
+                case BrowserVersions.gc31win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "31");
+                    break;
+                    //Windows 8 Browsers
+                case BrowserVersions.ie10win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "10");
+                    break;
                 case BrowserVersions.ff3win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "3.0");
@@ -576,11 +734,43 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "25");
                     break;
+                case BrowserVersions.gc26win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
                 case BrowserVersions.gc27win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "");
                     break;
-                    //Added Windows 7 browers
+                case BrowserVersions.gc28win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
+                case BrowserVersions.gc29win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "29");
+                    break;
+                case BrowserVersions.gc30win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "30");
+                    break;
+                case BrowserVersions.gc31win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "31");
+                    break;
+                    //Windows 7 browers
+                case BrowserVersions.ie8win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "8");
+                    break;
+                case BrowserVersions.ie9win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "9");
+                    break;
+                case BrowserVersions.ie10win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "10");
+                    break;
                 case BrowserVersions.ff3win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "3.0");
@@ -681,9 +871,29 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "25");
                     break;
+                case BrowserVersions.gc26win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
                 case BrowserVersions.gc27win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "");
+                    break;
+                case BrowserVersions.gc28win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
+                case BrowserVersions.gc29win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "29");
+                    break;
+                case BrowserVersions.gc30win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "30");
+                    break;
+                case BrowserVersions.gc31win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "31");
                     break;
                 case BrowserVersions.opera11win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
@@ -697,7 +907,23 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "5");
                     break;
-                //Added Windows XP browers
+                //Windows XP browers
+                case BrowserVersions.ie6winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "6");
+                    break;
+                case BrowserVersions.ie8winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "8");
+                    break;
+                case BrowserVersions.ie7winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "7");
+                    break;
+                case BrowserVersions.ff10winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "10");
+                    break;
                 case BrowserVersions.ff3winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "3.0");
@@ -746,6 +972,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "13");
                     break;
+                case BrowserVersions.ff14winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "14");
+                    break;
                 case BrowserVersions.ff15winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "15");
@@ -753,6 +983,10 @@ namespace SharpSauce
                 case BrowserVersions.ff16winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "16");
+                    break;
+                case BrowserVersions.ff17winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "17");
                     break;
                 case BrowserVersions.ff18winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
@@ -765,6 +999,10 @@ namespace SharpSauce
                 case BrowserVersions.ff20winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "20");
+                    break;
+                case BrowserVersions.ff21winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "21");
                     break;
                 case BrowserVersions.ff22winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
@@ -782,13 +1020,29 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "25");
                     break;
+                case BrowserVersions.gc26winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
                 case BrowserVersions.gc27winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.gc28winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc29winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "29");
+                    break;
+                case BrowserVersions.gc30winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "30");
+                    break;
+                case BrowserVersions.gc31winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "31");
                     break;
                 case BrowserVersions.opera11winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
@@ -798,7 +1052,7 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "12");
                     break;
-                    //Added Snow Leopard Browsers
+                    //Snow Leopard Browsers
                 case BrowserVersions.ff4SnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "4");
@@ -871,6 +1125,22 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "21");
                     break;
+                case BrowserVersions.ff22SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "22");
+                    break;
+                case BrowserVersions.ff23SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "23");
+                    break;
+                case BrowserVersions.ff24SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "24");
+                    break;
+                case BrowserVersions.ff25SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "25");
+                    break;
                 case BrowserVersions.gc28SnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "");
@@ -887,6 +1157,15 @@ namespace SharpSauce
                 case BrowserVersions.safari6MountainLion:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
                     caps.SetCapability(CapabilityType.Version, "6");
+                    break;
+                    //Mavericks Browsers
+                case BrowserVersions.gc31Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "31");
+                    break;
+                case BrowserVersions.safari7Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "7");
                     break;
                     //Linux Browsers
                 case BrowserVersions.ff3linux:
@@ -977,9 +1256,29 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "24");
                     break;
-                case BrowserVersions.gc28linux:
+                case BrowserVersions.ff25linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "25");
+                    break;
+                case BrowserVersions.gc26linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
+                case BrowserVersions.gc27linux:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "");
+                    break;
+                case BrowserVersions.gc28linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
+                case BrowserVersions.gc29linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "29");
+                    break;
+                case BrowserVersions.gc30linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "30");
                     break;
                 case BrowserVersions.opera12linux:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
@@ -1022,7 +1321,8 @@ namespace SharpSauce
             caps.SetCapability("capture-html", config.CaptureHTML);
             caps.SetCapability("record-screenshots", config.RecordScreenshots);
             caps.SetCapability("custom-data", config.CustomData);
-            var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps);
+            TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
+            var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, timeout);
             return driver;
         }
 

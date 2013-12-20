@@ -55,8 +55,8 @@ namespace SharpSauce
             gc30win81,
             gc31win81,
 
-            andriod4,
-            andriod4tablet,
+            android4,
+            android4tablet,
             iphone43,
             iphone5,
             iphone51,
@@ -441,11 +441,11 @@ namespace SharpSauce
             switch (config.BrowserVersion)
             {
                 //Mobile and tablet browsers
-                case BrowserVersions.andriod4:
+                case BrowserVersions.android4:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "4");
                     break;
-                case BrowserVersions.andriod4tablet:
+                case BrowserVersions.android4tablet:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "4");
                     caps.SetCapability("deviceType", "tablet");

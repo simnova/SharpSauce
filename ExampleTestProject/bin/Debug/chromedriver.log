@@ -1,0 +1,52 @@
+[0.001][INFO]:      ChromeDriver 26.0.1383.0 C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\chromedriver.exe
+[1.145][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chrome.switches": [  ],
+   "chromeOptions": {
+      "args": [  ],
+      "extensions": [  ]
+   },
+   "javascriptEnabled": true,
+   "platform": "WINDOWS",
+   "version": ""
+}
+
+[1.145][INFO]:      Launching chrome: "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --ignore-certificate-errors about:blank
+[1.699][INFO]:      Connected to Chrome successfully. Version: 30.0.1599.69
+[1.729][FINE]:      Command received (/session/5f4981859c6a91ceeefd0ae27a9dfcd6)
+[1.729][FINE]:      Command finished (/session/5f4981859c6a91ceeefd0ae27a9dfcd6) with response {
+   "sessionId": "5f4981859c6a91ceeefd0ae27a9dfcd6",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "26.0.1383.0",
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "windows",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "30.0.1599.69",
+      "webStorageEnabled": true
+   }
+}
+
+[1.832][FINE]:      Command received (/session/5f4981859c6a91ceeefd0ae27a9dfcd6/url) with params {
+   "url": "http://www.google.com/"
+}
+
+[1.832][FINER]:     Waiting for all views to stop loading...
+[1.833][FINER]:     Done waiting for all views to stop loading
+[1.842][FINE]:      Command received (/session/5f4981859c6a91ceeefd0ae27a9dfcd6/element) with params {
+   "using": "css selector",
+   "value": "input[type=text]"
+}
+
+[1.843][FINER]:     Waiting for all views to stop loading...
+[1.844][FINER]:     Done waiting for all views to stop loading

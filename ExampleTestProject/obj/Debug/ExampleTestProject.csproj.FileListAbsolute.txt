@@ -1,0 +1,14 @@
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\ExampleTestProject.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\ExampleTestProject.pdb
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\SharpSauce.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\WebDriver.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\Newtonsoft.Json.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\SharpSauce.pdb
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\WebDriver.xml
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\Newtonsoft.Json.xml
+C:\Files\GitHub\SharpSauce\ExampleTestProject\obj\Debug\ExampleTestProject.csprojResolveAssemblyReference.cache
+C:\Files\GitHub\SharpSauce\ExampleTestProject\obj\Debug\ExampleTestProject.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\obj\Debug\ExampleTestProject.pdb
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\WebDriver.Support.dll
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\WebDriver.Support.xml
+C:\Files\GitHub\SharpSauce\ExampleTestProject\bin\Debug\ExampleTestProject.dll.config

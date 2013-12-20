@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="">
+<select name="miracleofsound" size="1" id="Album4" type="Awesome">
+<option value="1">The Best of Us</option>
+<option value="2">The Crush</option>
+<option value="3">Hammers In My Head</option>
+<option value="4">Kickback</option>
+<option value="5">New New Black Gold</option>
+<option value="6">Beneath the Black Flag</option>
+<option value="7">Hard Cash</option>
+</select>
+</form>
+
+<form action="">
+<select name="miracleofsound" size="1" id="Album3" type="Amazing">
+<option value="1">Halfman's Song</option>
+<option value="2">The Savage Side of Me</option>
+<option value="3">The Best I Can</option>
+<option value="4">Distant Honor</option>
+<option value="5">Roll Out</option>
+<option value="6">Dream of the Sky</option>
+<option value="7">Doorfighter</option>
+</select>
+</form>
+
+</body>
+</html>

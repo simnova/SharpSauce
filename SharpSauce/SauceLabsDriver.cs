@@ -15,7 +15,7 @@ namespace SharpSauce
         public SauceLabsDriver(Uri uri, DesiredCapabilities capabilities, TimeSpan timeout) : base(uri, capabilities, timeout)
         {
             
-            SauceLabsDriver.DefaultCommandTimeout.Add(timeout);
+            SauceLabsDriver.DefaultCommandTimeout.Add(timeout).Subtract(TimeSpan.FromMinutes(1));
         } 
 
         public String GetExecutionId() 
@@ -23,7 +23,7 @@ namespace SharpSauce
            return this.SessionId.ToString(); 
        }
 
-        public Boolean AlertisPresent()
+        public Boolean IsAlertPresent()
         {
             try
             {
@@ -35,6 +35,7 @@ namespace SharpSauce
                 return false;
             }
         }
+
 
         //Login to a page by given username and password; Uses IDs to locate webelements
         //note: This method logs in by pressing "ENTER", it does not click a button.
@@ -73,6 +74,12 @@ namespace SharpSauce
         {
             this.FindElementByLinkText(linkingText).Click();
 
+        }
+
+        // Tells browser that 'Enter' button has been pressed
+        public void PressEnter()
+        {
+            this.Keyboard.SendKeys(Keys.Enter);
         }
 
         //Selects an element from a drop down table; Drop down table located by given ID.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -16,13 +17,36 @@ namespace ExampleTestProject
         public class UnitTest3
         {
             //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
-            private const string UserName = "userName";
-            private const string AccessKey = "accessKey";
-            private const string baseURL = "https://www.google.com/";
+            private const string UserName = "username";
+            private const string AccessKey = "accesskey";
+
+            //Test setup values
+            private const string baseURL = "https://www.google.com/"; //base url can be retrieved from selenium script
+            private const string TextFile = "OS-Browser-Combo-San.txt"; //name of text file containing browser/os combinations to be tested
+
+            //Test configuration values
+
+            //_TestName: Sets session name of test ("on browser/os combo" will be added automatically). Should be text string.
+            //_ScreenResolution: Sets screen resolution of test. Changing not recommended.
+            //_Timeout: Sets command timeout. Should be integer
+            //_BuildNumber: Sets build number. Should be text string
+            //_Tags_seq: Sets tags for sequential test. Should be list of text strings. Can have as many tags as desired
+            //_Tags_parall: Sets tags for parallel test. Should be list of text strings. Can have as many tags as desired
+
+            private const string _TestName = "Test for Selenium in Google"; 
+            private const SauceLabs.ScreenResolutions _ScreenResolution = SauceLabs.ScreenResolutions.screenDefault;
+            private const int _Timeout = 30;
+            private const string _BuildNumber = "11";
+            private string[] _Tags_seq = new string[] { "Example", "Simple Navigation", "unit test"};
+            private string[] _Tags_parall = new string[] { "parallel test", "Example", "extended timeout"};
+
             //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown. For parallel testing only.
-            private const int timeoutInMinutes = 5;
+            private int timeoutInMinutes = 5;
 
 
+            //Test Templates
+
+            //Local Test Templates
             public IWebDriver LocalTest(string browser)
             {
                 IWebDriver driver;
@@ -44,29 +68,92 @@ namespace ExampleTestProject
                 return driver;
             }
 
+             
+            //Remote Test Sequential Template
             [TestMethod]
             public void ExampleTestRemote()
             {
-                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-San.txt");
+                string[] lines = System.IO.File.ReadAllLines(TextFile);
+                List<string> failedCombos = new List<string>();
+                timeoutInMinutes = 1;
+
                 foreach (string line in lines)
                 {
-                    var sauceLabs = new SauceLabs(UserName, AccessKey);
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                     var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                     {
-                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line), //Do not Change
-                        TestName = "Test for Selenium in Google", //Can change
-                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault, //can Change, although not recommended
-                        Timeout = 30, //Can change
-                        BuildNumber = "10", //can change
-                        Tags = new string[] { "Example", "Simple navigation", "unit test" }, //can change
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line), //Do not change
+                        TestName = _TestName, 
+                        ScreenResolution = _ScreenResolution, 
+                        Timeout = _Timeout, 
+                        BuildNumber = _BuildNumber, 
+                        Tags = _Tags_seq, 
 
                     });
                     var results = sauceLabs.RunRemoteTestCase(driver, TutorialDemoTestCase);
-                   // Assert.IsTrue(results);
+
+                    try
+                    {
+                        Assert.IsTrue(results);
+                    }
+
+                    catch (AssertFailedException)
+                    {
+                        failedCombos.Add(line);
+                    }
                 }
 
+                if (failedCombos.Capacity > 0)
+                {
+                    string allFailedCombos = string.Join(", ", failedCombos.ToArray());
+                    Assert.IsTrue(false, "Test failed these browser/OS combinations: " + allFailedCombos);
+                }
             }
 
+            //Remote Test Parallel Template
+            [TestMethod]
+            public void ExampleTestRemoteParallel()
+            {
+
+                string[] lines = System.IO.File.ReadAllLines(TextFile);
+                List<string> failedCombos = new List<string>();
+
+                Parallel.ForEach(lines, line =>
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line), //Do not change
+                        TestName = _TestName,
+                        ScreenResolution = _ScreenResolution,
+                        Timeout = _Timeout,
+                        BuildNumber = _BuildNumber,
+                        Tags = _Tags_parall
+                    });
+
+                    var results = sauceLabs.RunRemoteTestCase(driver, TutorialDemoTestCase);
+                    try
+                    {
+                        Assert.IsTrue(results);
+                    }
+
+                    catch (AssertFailedException)
+                    {
+                        failedCombos.Add(line);
+                    }
+
+                }
+                );
+
+                if (failedCombos.Capacity > 0)
+                {
+                    string allFailedCombos = string.Join(", ", failedCombos.ToArray());
+                    Assert.IsTrue(false, "Test failed these browser/OS combinations: " + allFailedCombos);
+                }
+            }
+
+
+            //Test Script
             private bool TutorialDemoTestCase(SauceLabsDriver driver)
             {
                 //Insert your test script here

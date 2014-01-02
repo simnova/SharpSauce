@@ -241,10 +241,12 @@ namespace SharpSauce
 
         }
 
-        public SauceLabs(string userName, string accessKey)
+        public SauceLabs(string userName, string accessKey, int timeoutInMin)
         {
             _userName = userName;
             _accessKey = accessKey;
+            _timeout = timeoutInMin;
+            
         }
 
         public bool RunRemoteTestCase(SauceLabsDriver driver, Func<IWebDriver,bool> testCaseToRun )
@@ -1321,7 +1323,8 @@ namespace SharpSauce
             caps.SetCapability("capture-html", config.CaptureHTML);
             caps.SetCapability("record-screenshots", config.RecordScreenshots);
             caps.SetCapability("custom-data", config.CustomData);
-            TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
+            //TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
+            TimeSpan timeout = TimeSpan.FromMinutes(_timeout);
             var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, timeout);
             return driver;
         }

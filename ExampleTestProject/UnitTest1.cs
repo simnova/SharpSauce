@@ -20,7 +20,7 @@ namespace ExampleTestProject
         private const string AccessKey = "AccessKey";
         private const bool recordvideo = false;
         //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown.
-        private const int timeoutInMinutes = 5;
+        private int timeoutInMinutes = 5;
  
 
         public IWebDriver LocalTest(string browser)
@@ -107,7 +107,8 @@ namespace ExampleTestProject
         [TestMethod]
         public void TestIeRemote()
         {
-            var sauceLabs = new SauceLabs(UserName, AccessKey);
+            timeoutInMinutes = 1;
+            var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
             var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig{
                 BrowserVersion = SauceLabs.BrowserVersions.ie10win8,
                 TestName = "Google search for Selenium",
@@ -124,10 +125,11 @@ namespace ExampleTestProject
         public void TestCustomData()
         {
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+            timeoutInMinutes = 1;
 
             foreach (string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -153,10 +155,11 @@ namespace ExampleTestProject
         public void TestTags()
         {
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+            timeoutInMinutes = 1;
 
             foreach (string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -182,10 +185,11 @@ namespace ExampleTestProject
         {
 
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Desktop.txt");
+            timeoutInMinutes = 1;
 
             foreach (string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -209,7 +213,7 @@ namespace ExampleTestProject
 
             Parallel.ForEach(lines, line =>
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -232,10 +236,11 @@ namespace ExampleTestProject
         {
 
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Small.txt");
+            timeoutInMinutes = 1;
 
             foreach(string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -257,10 +262,11 @@ namespace ExampleTestProject
         public void TestBuildNumber()
         {
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+            timeoutInMinutes = 1;
 
             foreach (string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
@@ -284,9 +290,11 @@ namespace ExampleTestProject
         public void TestpersonalRemote()
         {
             string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-San.txt");
+            timeoutInMinutes = 1;
+
             foreach (string line in lines)
             {
-                var sauceLabs = new SauceLabs(UserName, AccessKey);
+                var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
                 var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                 {
                     BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),

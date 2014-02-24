@@ -17,7 +17,7 @@ namespace ExampleTestProject
     {
         //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
         private const string UserName = "username";
-        private const string AccessKey = "AccessKey";
+        private const string AccessKey = "access key";
         private const bool recordvideo = false;
         //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown.
         private int timeoutInMinutes = 5;
@@ -37,7 +37,7 @@ namespace ExampleTestProject
                     break;
                 case "ie":
                 default: 
-                    driver = new InternetExplorerDriver();
+                    driver = new InternetExplorerDriver(@"C:\Files\GitHub\SharpSauce\ExampleTestProject");
                     break;
 
             }

@@ -60,11 +60,11 @@ namespace SharpSauce
         //Login to a page by given username and password; Uses tags and attributes to locate webelements
         //note: This method logs in by pressing "ENTER", it does not click a button.
         //note: Don't use this method if you intend to test a login button or if pressing "ENTER" does not submit text fields.
-        public void loginByTagAndAttribute(String Username, String Password, String usernameTag,
-            String usernameAttribute, String usernameValue, String passwordTag, String passwordAttribute, String passwordValue)
+        public void loginByAttribute(String Username, String Password,
+            String usernameAttribute, String usernameValue, String passwordAttribute, String passwordValue)
         {
-            this.enterValueByTagandAttribute(usernameTag, usernameAttribute, usernameValue, Username);
-            this.enterValueByTagandAttribute(passwordTag, passwordAttribute, passwordValue, Password);
+            this.enterValueByAttribute(usernameAttribute, usernameValue, Username);
+            this.enterValueByAttribute(passwordAttribute, passwordValue, Password);
             this.Keyboard.SendKeys(Keys.Enter);
         }
 
@@ -107,7 +107,7 @@ namespace SharpSauce
         }
 
         //selects a radio button option
-        public void clickRadioButton(String buttonName, String buttonValue)
+        public void clickRadioButtonByName(String buttonName, String buttonValue)
         {
             IList<IWebElement> radioButtonOptions = this.FindElements(By.Name(buttonName));
             foreach (IWebElement option in radioButtonOptions)
@@ -120,10 +120,36 @@ namespace SharpSauce
                 
         }
 
+        public void clickRadioButtonByID(String buttonID, String buttonValue)
+        {
+            IList<IWebElement> radioButtonOptions = this.FindElements(By.Id(buttonID));
+            foreach (IWebElement option in radioButtonOptions)
+            {
+                if (option.GetAttribute("value").Equals(buttonValue))
+                {
+                    option.Click();
+                }
+            }
+
+        }
+
         //selects a checkbox element
-        public void clickCheckBox(String checkBoxName, String checkBoxValue)
+        public void clickCheckBoxByName(String checkBoxName, String checkBoxValue)
         {
             IList<IWebElement> radioButtonOptions = this.FindElements(By.Name(checkBoxName));
+            foreach (IWebElement option in radioButtonOptions)
+            {
+                if (option.GetAttribute("value").Equals(checkBoxValue))
+                {
+                    option.Click();
+                }
+            }
+
+        }
+
+        public void clickCheckBoxByID(String checkBoxID, String checkBoxValue)
+        {
+            IList<IWebElement> radioButtonOptions = this.FindElements(By.Id(checkBoxID));
             foreach (IWebElement option in radioButtonOptions)
             {
                 if (option.GetAttribute("value").Equals(checkBoxValue))
@@ -161,10 +187,10 @@ namespace SharpSauce
         }
 
         //Enters a string to a textfield webelement; Uses "tag[Attribute=value]" locator to locate webelement
-        public void enterValueByTagandAttribute(String Tag, String Attribute, String attributeValue, String Value)
+        public void enterValueByAttribute(String Attribute, String attributeValue, String Value)
         {
-            this.FindElementByCssSelector(Tag + "[" + Attribute + "=" + attributeValue + "]").Clear();
-            this.FindElementByCssSelector(Tag + "[" + Attribute + "=" + attributeValue + "]").SendKeys(Value);
+            this.FindElementByCssSelector("input" + "[" + Attribute + "=" + attributeValue + "]").Clear();
+            this.FindElementByCssSelector("input" + "[" + Attribute + "=" + attributeValue + "]").SendKeys(Value);
         }
 
         //Driver sleeps for a set given time before moving on with the test.
@@ -173,15 +199,27 @@ namespace SharpSauce
             Thread.Sleep(TimetoWaitinSeconds * 1000);
         }
 
-        public void WaitUntilElementVisiblebyID(String id)
+        public void WaitUntilElementVisibleByID(String id)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(1));
+            wait.Until(ExpectedConditions.ElementExists(By.Id(id)));
+        }
+
+        public void WaitUntilElementVisibleByID(String id, int minutes)
+        {
+            var wait = new WebDriverWait(this, TimeSpan.FromMinutes(minutes));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id(id)));
         }
 
-        public void WaitUntilElementVisiblebyName(String name)
+        public void WaitUntilElementVisibleByName(String name)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(1));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Name(name)));
+        }
+
+        public void WaitUntilElementVisibleByName(String name, int minutes)
+        {
+            var wait = new WebDriverWait(this, TimeSpan.FromMinutes(minutes));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Name(name)));
         }
     }

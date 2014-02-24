@@ -6,6 +6,5 @@ C:\Files\GitHub\SharpSauce\SharpSauce\bin\Debug\WebDriver.Support.dll
 C:\Files\GitHub\SharpSauce\SharpSauce\bin\Debug\Newtonsoft.Json.xml
 C:\Files\GitHub\SharpSauce\SharpSauce\bin\Debug\WebDriver.xml
 C:\Files\GitHub\SharpSauce\SharpSauce\bin\Debug\WebDriver.Support.xml
-C:\Files\GitHub\SharpSauce\SharpSauce\obj\Debug\SharpSauce.csprojResolveAssemblyReference.cache
 C:\Files\GitHub\SharpSauce\SharpSauce\obj\Debug\SharpSauce.dll
 C:\Files\GitHub\SharpSauce\SharpSauce\obj\Debug\SharpSauce.pdb

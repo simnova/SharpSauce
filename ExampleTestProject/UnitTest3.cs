@@ -18,7 +18,7 @@ namespace ExampleTestProject
         {
             //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
             private const string UserName = "username";
-            private const string AccessKey = "accesskey";
+            private const string AccessKey = "access key";
 
             //Test setup values
             private const string baseURL = "https://www.google.com/"; //base url can be retrieved from selenium script

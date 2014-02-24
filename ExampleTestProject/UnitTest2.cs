@@ -48,7 +48,7 @@ namespace ExampleTestProject
             }
 
             [TestMethod]
-            public void TestloginByIDMethodRemote()
+            public void TestloginByNameMethodRemote()
             {
                 string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-San.txt");
                 timeoutInMinutes = 1;
@@ -59,14 +59,39 @@ namespace ExampleTestProject
                     var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                     {
                         BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
-                        TestName = "Login by Id test for jsfiddle",
+                        TestName = "Login by Name test for NewTours",
                         ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
                         Timeout = 30,
-                        BuildNumber = "",
+                        BuildNumber = "9",
+                        Tags = new string[] { "NewTours", "login by name", "unit test" },
+
+                    });
+                    var results = sauceLabs.RunRemoteTestCase(driver, LoginByNameTestCase);
+                    Assert.IsTrue(results);
+                }
+
+            }
+
+            [TestMethod]
+            public void TestloginByIdMethodRemote()
+            {
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-San.txt");
+                timeoutInMinutes = 1;
+
+                foreach (string line in lines)
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                        TestName = "Login by ID test for jsfiddle",
+                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                        Timeout = 30,
+                        BuildNumber = "9",
                         Tags = new string[] { "jsfiddle", "login by id", "unit test" },
 
                     });
-                    var results = sauceLabs.RunRemoteTestCase(driver, TutorialDemoTestCase);
+                    var results = sauceLabs.RunRemoteTestCase(driver, LoginByIDTestCase);
                     Assert.IsTrue(results);
                 }
 
@@ -325,7 +350,7 @@ namespace ExampleTestProject
             [TestMethod]
             public void TestWaitUntilElementVisiblebyIdMethodRemote()
             {
-                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-Indiv.txt");
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-WaitElVis.txt");
                 timeoutInMinutes = 1;
 
                 foreach (string line in lines)
@@ -334,15 +359,119 @@ namespace ExampleTestProject
                     var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
                     {
                         BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
-                        TestName = "wait until element appears on e.ggtimer",
+                        TestName = "wait until element appears on google.com",
                         ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
                         Timeout = 180,
                         BuildNumber = "9",
-                        Tags = new string[] { "w3c validator", "wait until element is visible", "unit test" },
+                        Tags = new string[] { "selenium search", "wait until element is visible", "unit test" },
 
                     });
 
                     var results = sauceLabs.RunRemoteTestCase(driver, WaitUntilElementVisiblebyIdTestCase);
+                    Assert.IsTrue(results);
+                }
+
+            }
+
+            [TestMethod]
+            public void TestClickRadioButtonByIDMethodRemote()
+            {
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-san.txt");
+                timeoutInMinutes = 1;
+
+                foreach (string line in lines)
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                        TestName = "click a radio button",
+                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                        Timeout = 30,
+                        BuildNumber = "9",
+                        Tags = new string[] { "w3.org", "radio buttons", "unit test" },
+
+                    });
+
+                    var results = sauceLabs.RunRemoteTestCase(driver, ClickRadioButtonByIDTestCase);
+                    Assert.IsTrue(results);
+                }
+
+            }
+
+            [TestMethod]
+            public void TestClickRadioButtonByNameMethodRemote()
+            {
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-san.txt");
+                timeoutInMinutes = 1;
+
+                foreach (string line in lines)
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                        TestName = "click a radio button on W3schools",
+                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                        Timeout = 30,
+                        BuildNumber = "9",
+                        Tags = new string[] { "w3schools.com", "radio buttons", "unit test" },
+
+                    });
+
+                    var results = sauceLabs.RunRemoteTestCase(driver, ClickRadioButtonByNameTestCase);
+                    Assert.IsTrue(results);
+                }
+
+            }
+
+            [TestMethod]
+            public void TestClickCheckBoxByIDMethodRemote()
+            {
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-indiv.txt");
+                timeoutInMinutes = 1;
+
+                foreach (string line in lines)
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                        TestName = "click a check box",
+                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                        Timeout = 30,
+                        BuildNumber = "9",
+                        Tags = new string[] { "w3.org", "check box", "unit test" },
+
+                    });
+
+                    var results = sauceLabs.RunRemoteTestCase(driver, ClickCheckBoxByIDTestCase);
+                    Assert.IsTrue(results);
+                }
+
+            }
+
+            [TestMethod]
+            public void PressEnterMethodRemote()
+            {
+                string[] lines = System.IO.File.ReadAllLines("OS-Browser-Combo-indiv.txt");
+                timeoutInMinutes = 1;
+
+                foreach (string line in lines)
+                {
+                    var sauceLabs = new SauceLabs(UserName, AccessKey, timeoutInMinutes);
+                    var driver = sauceLabs.GetRemoteDriver(new SauceLabs.SauceLabsConfig
+                    {
+                        BrowserVersion = (SauceLabs.BrowserVersions)Enum.Parse(typeof(SauceLabs.BrowserVersions), line),
+                        TestName = "Press enter testing",
+                        ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
+                        Timeout = 30,
+                        BuildNumber = "9",
+                        Tags = new string[] { "google", "press enter", "unit test" },
+
+                    });
+
+                    var results = sauceLabs.RunRemoteTestCase(driver, PressEnterTestCase);
                     Assert.IsTrue(results);
                 }
 
@@ -434,7 +563,7 @@ namespace ExampleTestProject
                 var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
                 driver.Navigate().GoToUrl("http://jsfiddle.net/simnova/GnSU9/1/embedded/result/");
                 driver.SwitchTo().Frame(0);
-                driver.enterValueByTagandAttribute("input", "type", "tel", phone);
+                driver.enterValueByAttribute("type", "tel", phone);
                 var afterEnterValue = driver.FindElement(By.CssSelector("input[type=tel]")).GetAttribute("value");
                 var results = afterEnterValue == phone;
                 return results;
@@ -519,12 +648,13 @@ namespace ExampleTestProject
 
             private bool WaitUntilElementVisiblebyIdTestCase(SauceLabsDriver driver)
             {
-                var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-                driver.Navigate().GoToUrl("http://e.ggtimer.com");
-                driver.FindElement(By.Id("timergo")).Click();
-                driver.WaitUntilElementVisiblebyID("progressText");
-                return driver.Title.Contains("E.ggtimer");
+                driver.Navigate().GoToUrl("https://www.google.com/");
+                driver.FindElement(By.Id("gbqfq")).Clear();
+                driver.FindElement(By.Id("gbqfq")).SendKeys("Selenium");
+                driver.WaitUntilElementVisibleByID("res");
+                return driver.FindElementByLinkText("Selenium - Web Browser Automation").Displayed;
             }
+
 
             private bool IsAlertPresentTestCase(SauceLabsDriver driver)
             {
@@ -534,16 +664,69 @@ namespace ExampleTestProject
                 return !driver.IsAlertPresent();
             }
 
-            private bool RunLoginTestCase(SauceLabsDriver driver)
+            private bool ClickRadioButtonByIDTestCase(SauceLabsDriver driver)
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-                driver.Navigate().GoToUrl("http://jsfiddle.net/simnova/GnSU9/1/embedded/result/");
-                driver.SwitchTo().Frame(0);
-                driver.loginByID("8015555555p", "fakeEmail@notreal.com", "personalInfoPhone", "personalInfoEmail");
-                var results = driver.getElementValueByID("personalInfoPhone");
-                return results == "8015555555p";
+                driver.Navigate().GoToUrl("http://www.w3.org/WAI/UA/TS/html401/cp0101/0101-RADIO.html");
+                driver.clickRadioButtonByID("button2", "2");
+                var results = driver.FindElement(By.Id("button2")).Selected;
+                return results;
             }
 
+            private bool ClickRadioButtonByNameTestCase(SauceLabsDriver driver)
+            {
+                driver.Navigate().GoToUrl("http://www.w3schools.com/html/tryit.asp?filename=tryhtml_radio");
+                driver.SwitchTo().Frame("iframeResult");
+                driver.clickRadioButtonByName("sex", "male");
+                var results = driver.FindElement(By.Name("sex")).Selected;
+                return results;
+            }
+
+            private bool ClickCheckBoxByIDTestCase(SauceLabsDriver driver)
+            {
+                driver.Navigate().GoToUrl("http://www.utexas.edu/learn/forms/checkboxes.html");
+                driver.ExecuteScript("window.scrollBy(0, " + 800 + ");");
+                driver.clickCheckBoxByID("programming", "yes");
+                driver.clickCheckBoxByID("writing", "yes");
+                var results = driver.FindElement(By.Id("writing")).Selected;
+                return results;
+            }
+
+            private bool PressEnterTestCase(SauceLabsDriver driver)
+            {
+                driver.Navigate().GoToUrl("https://www.google.com/");
+                driver.FindElement(By.Id("gbqfq")).Clear();
+                driver.FindElement(By.Id("gbqfq")).SendKeys("SharpSauce");
+                driver.PressEnter();
+                var results = driver.Title.Contains("SharpSauce");
+                return results;
+                
+            }
+            
+            private bool LoginByNameTestCase(SauceLabsDriver driver)
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+                driver.Navigate().GoToUrl("http://newtours.demoaut.com/");
+                driver.loginByName(loginName, loginPassword, "userName", "password");
+                driver.WaitUntilElementVisibleByName("passCount");
+                string expectedTitle = "Find a Flight: Mercury Tours:";
+                string actualTitle = driver.Title;
+                var results = actualTitle == expectedTitle;
+                return results;
+            }
+
+            private bool LoginByIDTestCase(SauceLabsDriver driver)
+            {
+                driver.Navigate().GoToUrl("http://jsfiddle.net/simnova/GnSU9/1/embedded/result/");
+                driver.SwitchTo().Frame(0);
+                driver.FindElement(By.Id("personalInfoPhone")).Clear();
+                driver.FindElement(By.Id("personalInfoPhone")).SendKeys("Overwrite me!");
+                driver.loginByID(phone, email, "personalInfoPhone", "personalInfoEmail");
+                var phoneFieldActual=driver.FindElement(By.Id("personalInfoPhone")).GetAttribute("value");
+                var phoneFieldExpected = "";
+                var results = phoneFieldActual == phoneFieldExpected;
+                return results;
+            }
 
             private bool TutorialDemoTestCase(SauceLabsDriver driver)
             {
@@ -553,9 +736,9 @@ namespace ExampleTestProject
                 String titleActual = driver.Title;
                 wait.Until(ExpectedConditions.TitleContains("Find a Flight: Mercury Tours:"));
                 driver.SelectDropDownValueByName("fromPort", "Seattle");
-                driver.clickRadioButton("tripType", "oneway");
+                driver.clickRadioButtonByName("tripType", "oneway");
                 driver.SelectDropDownValueByName("passCount", "3");
-                driver.clickRadioButton("servClass", "Business");
+                driver.clickRadioButtonByName("servClass", "Business");
                 driver.SelectDropDownValueByName("airline", "Unified Airlines");
 
                 var results = driver.getElementValueByName("fromPort") == "Seattle";

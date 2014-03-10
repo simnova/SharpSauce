@@ -22,6 +22,7 @@ namespace ExampleTestProject
             private const string email = "fakeperson@notreal.com";
             private const string loginName = "tutorial";
             private const string loginPassword = "tutorial";
+            private const bool mobile = false;
             //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown.
             private int timeoutInMinutes = 5;
 
@@ -65,7 +66,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "NewTours", "login by name", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, LoginByNameTestCase);
                     Assert.IsTrue(results);
                 }
@@ -90,7 +91,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "jsfiddle", "login by id", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, LoginByIDTestCase);
                     Assert.IsTrue(results);
                 }
@@ -115,7 +116,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "jsfiddle", "get value by id", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, GetValueByIdTestCase);
                     Assert.IsTrue(results);
                 }
@@ -140,7 +141,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "new tours demo", "get value by name", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, GetValueByNameTestCase);
                     Assert.IsTrue(results);
                 }
@@ -165,7 +166,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "jsfiddle", "enter value by id", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, EnterValueByIdTestCase);
                     Assert.IsTrue(results);
                 }
@@ -190,7 +191,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "new tours demo", "enter value by name", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, EnterValueByNameTestCase);
                     Assert.IsTrue(results);
                 }
@@ -215,7 +216,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "jsfiddle", "enter value by tag and attribute", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, EnterValueByTagandAttributeTestCase);
                     Assert.IsTrue(results);
                 }
@@ -240,7 +241,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "new tours demo", "click on link", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, NavigateByLinkTestCase);
                     Assert.IsTrue(results);
                 }
@@ -265,7 +266,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "new tours demo", "drop down by name", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, SelectDropDownByNameTestCase);
                     Assert.IsTrue(results);
                 }
@@ -290,7 +291,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "custom drop downs", "drop down by attribute", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, SelectDropDownByAttributeTestCase);
                     Assert.IsTrue(results);
                 }
@@ -315,7 +316,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "custom drop downs", "drop down by Id", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, SelectDropDownByIdTestCase);
                     Assert.IsTrue(results);
                 }
@@ -340,7 +341,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "e.ggtimer", "wait until time", "unit test" },
 
-                    });
+                    }, mobile);
                     var results = sauceLabs.RunRemoteTestCase(driver, WaitUntilTimeTestCase);
                     Assert.IsTrue(results);
                 }
@@ -365,7 +366,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "selenium search", "wait until element is visible", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, WaitUntilElementVisiblebyIdTestCase);
                     Assert.IsTrue(results);
@@ -391,7 +392,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "w3.org", "radio buttons", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, ClickRadioButtonByIDTestCase);
                     Assert.IsTrue(results);
@@ -417,7 +418,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "w3schools.com", "radio buttons", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, ClickRadioButtonByNameTestCase);
                     Assert.IsTrue(results);
@@ -443,7 +444,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "w3.org", "check box", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, ClickCheckBoxByIDTestCase);
                     Assert.IsTrue(results);
@@ -469,7 +470,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "google", "press enter", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, PressEnterTestCase);
                     Assert.IsTrue(results);
@@ -495,7 +496,7 @@ namespace ExampleTestProject
                         BuildNumber = "9",
                         Tags = new string[] { "small method", "alerts", "unit test" },
 
-                    });
+                    }, mobile);
 
                     var results = sauceLabs.RunRemoteTestCase(driver, WaitUntilElementVisiblebyIdTestCase);
                     Assert.IsTrue(results);

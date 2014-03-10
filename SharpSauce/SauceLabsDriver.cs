@@ -199,24 +199,28 @@ namespace SharpSauce
             Thread.Sleep(TimetoWaitinSeconds * 1000);
         }
 
+        //Driver waits until an element with the given id appears on the webpage, within a minute
         public void WaitUntilElementVisibleByID(String id)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(1));
             wait.Until(ExpectedConditions.ElementExists(By.Id(id)));
         }
 
+        //Driver waits until an element with the given id appears on the webpage, within a given time provided by the user
         public void WaitUntilElementVisibleByID(String id, int minutes)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(minutes));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id(id)));
         }
 
+        //Driver waits until an element with the given name appears on the webpage, within a minute
         public void WaitUntilElementVisibleByName(String name)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(1));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Name(name)));
         }
 
+        //Driver waits until an element with the given name appears on the webpage, within a given time provided by the user
         public void WaitUntilElementVisibleByName(String name, int minutes)
         {
             var wait = new WebDriverWait(this, TimeSpan.FromMinutes(minutes));

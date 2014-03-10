@@ -1,10 +1,1 @@
-andriod4
-andriod4tablet
-iphone43
-iphone5
-iphone51
-iphone6
-ipad43
-ipad5
-ipad51
-ipad6
+android4

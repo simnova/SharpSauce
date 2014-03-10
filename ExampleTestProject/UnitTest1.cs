@@ -19,6 +19,7 @@ namespace ExampleTestProject
         private const string UserName = "username";
         private const string AccessKey = "access key";
         private const bool recordvideo = false;
+        private const bool mobile = false;
         //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown.
         private int timeoutInMinutes = 5;
  
@@ -114,7 +115,7 @@ namespace ExampleTestProject
                 TestName = "Google search for Selenium",
                 ScreenResolution = SauceLabs.ScreenResolutions.screenDefault,
                 Timeout = 40
-            });
+            }, mobile);
              
             var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
             Assert.IsTrue(results);
@@ -140,7 +141,7 @@ namespace ExampleTestProject
                     Tags = new string[] { "custom data", "screenshots", "video" },
                     CustomData = new SauceLabs.customData{Staging = false, Release = "1.0" }
 
-                });
+                }, mobile);
                 string jobID = driver.GetExecutionId();
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 var ending = new SauceRest(UserName, AccessKey);
@@ -171,7 +172,7 @@ namespace ExampleTestProject
                     RecordVideo = true,
                     RecordScreenshots = true,
 
-                });
+                }, mobile);
                 string jobID = driver.GetExecutionId();
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 var ending = new SauceRest(UserName, AccessKey);
@@ -198,7 +199,7 @@ namespace ExampleTestProject
                     Timeout = 40,
                     BuildNumber = "2",
                     Tags = new string[] { "Google", "Selenium", "All Desktop OS/browsers" }
-                });
+                }, mobile);
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 Assert.IsTrue(results);
 
@@ -222,7 +223,7 @@ namespace ExampleTestProject
                     Timeout = 40,
                     BuildNumber = "6",
                     Tags = new string[] { "parallel test", "compressed list", "extended timeout" }
-                });
+                }, mobile);
 
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 Assert.IsTrue(results);
@@ -249,7 +250,7 @@ namespace ExampleTestProject
                     Timeout = 40,
                     BuildNumber = "6",
                     Tags = new string[] {"sequential test", "compressed list", "extended timeout" }
-                });
+                }, mobile);
 
                 var results = sauceLabs.RunRemoteTestCase(driver, RunTestCase);
                 Assert.IsTrue(results);
@@ -276,7 +277,7 @@ namespace ExampleTestProject
                     BuildNumber = "5",
                     Tags = new string[] { "Build Number test" },
 
-                });
+                }, mobile);
                 string jobID = driver.GetExecutionId();
                 var results = sauceLabs.RunRemoteTestCase(driver, RunloginTestCase);
                 var ending = new SauceRest(UserName, AccessKey);
@@ -304,7 +305,7 @@ namespace ExampleTestProject
                     BuildNumber = "7",
                     Tags = new string[] { "jsfiddle", "edit/confirm personal info", "safari" },
 
-                });
+                }, mobile);
                 var results = sauceLabs.RunRemoteTestCase(driver, RuntextEntryTestCase);
                 Assert.IsTrue(results);
             }

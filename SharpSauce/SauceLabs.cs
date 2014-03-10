@@ -59,17 +59,25 @@ namespace SharpSauce
             gc32win81,
 
             android4,
+            android41,
+            android42,
+            android43,
             android4tablet,
+            android41tablet,
+            android42tablet,
+            android43tablet,
             iphone43,
             iphone5,
             iphone51,
             iphone6,
             iphone61,
+            iphone7,
             ipad43,
             ipad5,
             ipad51,
             ipad6,
             ipad61,
+            ipad7,
 
             ie10win8,
             ff3win8,
@@ -326,6 +334,20 @@ namespace SharpSauce
             return results;
         }
 
+        public DesiredCapabilities createCapabilities(string deviceID)
+        {
+            DesiredCapabilities caps = new DesiredCapabilities();
+            caps.SetCapability("app-package", "com.ECFMG.test");
+            caps.SetCapability("browserName", "");
+            caps.SetCapability("device", "Android");
+            caps.SetCapability("app-activity", "com.ECFMG.MainActivity");
+            caps.SetCapability("takeScreenshot", true);
+            caps.SetCapability("version", "4.1.9");
+            caps.SetCapability("device ID", deviceID);
+            caps.SetCapability("app", @"C:\MobileApps\MyFirstMobileApp\out\production\android\android.apk");
+            return caps;
+        }
+
         public class SauceLabsConfig
         {
             private ScreenResolutions _sceenResolution;
@@ -436,7 +458,7 @@ namespace SharpSauce
         }
 
 
-        public SauceLabsDriver GetRemoteDriver(SauceLabsConfig config)
+        public SauceLabsDriver GetRemoteDriver(SauceLabsConfig config, bool mobile)
         {
             
             DesiredCapabilities caps;
@@ -455,7 +477,7 @@ namespace SharpSauce
             {
                 caps = DesiredCapabilities.Firefox();
             }
-            else if (versionName.StartsWith("andriod"))
+            else if (versionName.StartsWith("android"))
             {
                 caps = DesiredCapabilities.Android();
             }
@@ -480,6 +502,10 @@ namespace SharpSauce
                 throw new ArgumentException("Browser Version not Supported");
             }
 
+            if (mobile)
+            {
+                caps = createCapabilities("123456");
+            }
 
             caps.SetCapability("name", config.TestName + " on " + versionName);
 
@@ -488,62 +514,99 @@ namespace SharpSauce
                 //Mobile and tablet browsers
                 case BrowserVersions.android4:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
-                    caps.SetCapability(CapabilityType.Version, "4");
+                    caps.SetCapability(CapabilityType.Version, "4.0");
+                    break;
+                case BrowserVersions.android41:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.1");
+                    break;
+                case BrowserVersions.android42:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.2");
+                    break;
+                case BrowserVersions.android43:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.3");
                     break;
                 case BrowserVersions.android4tablet:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
-                    caps.SetCapability(CapabilityType.Version, "4");
+                    caps.SetCapability(CapabilityType.Version, "4.0");
                     caps.SetCapability("deviceType", "tablet");
                     break;
-                case BrowserVersions.iphone61:
-                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
-                    caps.SetCapability(CapabilityType.Version, "6.1");
+                case BrowserVersions.android41tablet:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.1");
+                    caps.SetCapability("deviceType", "tablet");
                     break;
-                case BrowserVersions.iphone6:
-                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
-                    caps.SetCapability(CapabilityType.Version, "6.0");
+                case BrowserVersions.android42tablet:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.2");
+                    caps.SetCapability("deviceType", "tablet");
                     break;
-                case BrowserVersions.iphone51:
-                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
-                    caps.SetCapability(CapabilityType.Version, "5.1");
-                    break;
-                case BrowserVersions.iphone5:
-                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
-                    caps.SetCapability(CapabilityType.Version, "5.0");
+                case BrowserVersions.android43tablet:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "4.3");
+                    caps.SetCapability("deviceType", "tablet");
                     break;
                 case BrowserVersions.iphone43:
                     caps.SetCapability(CapabilityType.BrowserName, "iphone");
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "4.3");
                     break;
-                case BrowserVersions.ipad61:
-                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
-                    caps.SetCapability(CapabilityType.Version, "6.1");
+                case BrowserVersions.iphone5:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "5.0");
                     break;
-                case BrowserVersions.ipad6:
-                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                case BrowserVersions.iphone51:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "5.1");
+                    break;
+                case BrowserVersions.iphone6:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
                     caps.SetCapability(CapabilityType.Version, "6.0");
                     break;
-                case BrowserVersions.ipad51:
-                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                case BrowserVersions.iphone61:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
-                    caps.SetCapability(CapabilityType.Version, "5.1");
+                    caps.SetCapability(CapabilityType.Version, "6.1");
+                    break;
+                case BrowserVersions.iphone7:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "7");
+                    break;
+                case BrowserVersions.ipad43:
+                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "4.3");
                     break;
                 case BrowserVersions.ipad5:
                     caps.SetCapability(CapabilityType.BrowserName, "ipad");
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "5.0");
                     break;
-                case BrowserVersions.ipad43:
+                case BrowserVersions.ipad51:
                     caps.SetCapability(CapabilityType.BrowserName, "ipad");
-                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
-                    caps.SetCapability(CapabilityType.Version, "4.3");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "5.1");
+                    break;
+                case BrowserVersions.ipad6:
+                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "6.0");
+                    break;
+                case BrowserVersions.ipad61:
+                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "6.1");
+                    break;
+                case BrowserVersions.ipad7:
+                    caps.SetCapability(CapabilityType.BrowserName, "ipad");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "7");
                     break;
                     //Windows 8.1 browsers
                 case BrowserVersions.ie11win81:
@@ -1529,6 +1592,8 @@ namespace SharpSauce
                     break;
             }
             
+
+
             caps.SetCapability("username", _userName);
             caps.SetCapability("accessKey", _accessKey);
             caps.SetCapability("idle-timeout", config.Timeout);
@@ -1540,7 +1605,7 @@ namespace SharpSauce
             caps.SetCapability("custom-data", config.CustomData);
             //TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
             TimeSpan timeout = TimeSpan.FromMinutes(_timeout);
-            var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, timeout);
+            var driver = new SauceLabsDriver(new Uri("http://localhost:4723/wd/hub/status"), caps, timeout); //http://ondemand.saucelabs.com:80/wd/hub
             return driver;
         }
 

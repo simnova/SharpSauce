@@ -1605,7 +1605,7 @@ namespace SharpSauce
             caps.SetCapability("custom-data", config.CustomData);
             //TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
             TimeSpan timeout = TimeSpan.FromMinutes(_timeout);
-            var driver = new SauceLabsDriver(new Uri("http://localhost:4723/wd/hub/status"), caps, timeout); //http://ondemand.saucelabs.com:80/wd/hub
+            var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, timeout); 
             return driver;
         }
 

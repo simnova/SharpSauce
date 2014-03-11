@@ -25,12 +25,13 @@ namespace ExampleTestProject
         private const string TextFile = "OS-Browser-Combo-Mobile.txt"; //name of text file containing browser/os combinations to be tested
         private const bool mobile = true;
 
-        private const string _TestName = "Test for Selenium in Google";
+        private const string _TestName = "Remote Mobile Test";
         private const SauceLabs.ScreenResolutions _ScreenResolution = SauceLabs.ScreenResolutions.screenDefault;
         private const int _Timeout = 30;
         private const string _BuildNumber = "17";
-        private string[] _Tags_seq = new string[] { "Example", "mobile app", "unit test" };
+        private string[] _Tags_seq = new string[] { "Example", "mobile app", "appium" };
         private string[] _Tags_parall = new string[] { "parallel test", "Example", "extended timeout" };
+        
 
         //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown. For parallel testing only.
         private int timeoutInMinutes = 5;

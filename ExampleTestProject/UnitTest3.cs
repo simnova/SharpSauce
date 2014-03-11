@@ -17,7 +17,7 @@ namespace ExampleTestProject
         public class UnitTest3
         {
             //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
-            private const string UserName = "userName";
+            private const string UserName = "username";
             private const string AccessKey = "access key";
 
             //Test setup values

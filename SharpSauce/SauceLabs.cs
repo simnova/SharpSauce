@@ -10,6 +10,7 @@ namespace SharpSauce
         private readonly string _userName;
         private readonly string _accessKey;
         public int _timeout;
+        public string URL = "http://ondemand.saucelabs.com:80/wd/hub";
 
         public enum ScreenResolutions
         {
@@ -57,6 +58,7 @@ namespace SharpSauce
             gc30win81,
             gc31win81,
             gc32win81,
+            gcbwin81,
 
             android4,
             android41,
@@ -114,10 +116,12 @@ namespace SharpSauce
             gc30win8,
             gc31win8,
             gc32win8,
+            gcbwin8,
 
             ie8win7,
             ie9win7,
             ie10win7,
+            ie11win7,
             ff3win7,
             ff35win7,
             ff36win7,
@@ -152,6 +156,7 @@ namespace SharpSauce
             gc30win7,
             gc31win7,
             gc32win7,
+            gcbwin7,
             opera11win7,
             opera12win7,
             safari5win7,
@@ -193,6 +198,7 @@ namespace SharpSauce
             gc30winXP,
             gc31winXP,
             gc32winXP,
+            gcbwinXP,
             opera11winXP,
             opera12winXP,
 
@@ -222,11 +228,15 @@ namespace SharpSauce
             gc27SnowLeopard,
             gc28SnowLeopard,
             gc31SnowLeopard,
+            gc32SnowLeopard,
+            gcbSnowLeopard,
             safari5SnowLeopard,
 
             gc27MountainLion,
             gc28MountainLion,
             gc31MountainLion,
+            gc32MountainLion,
+            gcbMountainLion,
             safari6MountainLion,
 
             ff4Mavericks,
@@ -334,17 +344,15 @@ namespace SharpSauce
             return results;
         }
 
-        public DesiredCapabilities createCapabilities(string deviceID)
+        public DesiredCapabilities createCapabilities()
         {
             DesiredCapabilities caps = new DesiredCapabilities();
-            caps.SetCapability("app-package", "com.ECFMG.test");
-            caps.SetCapability("browserName", "");
+            caps.SetCapability("app-package", "com.ECFMG");
             caps.SetCapability("device", "Android");
-            caps.SetCapability("app-activity", "com.ECFMG.MainActivity");
-            caps.SetCapability("takeScreenshot", true);
-            caps.SetCapability("version", "4.1.9");
-            caps.SetCapability("device ID", deviceID);
-            caps.SetCapability("app", @"C:\MobileApps\MyFirstMobileApp\out\production\android\android.apk");
+            caps.SetCapability("app-activity", "com.ECFMG.MyFirstMobileApp");
+            caps.SetCapability("version", "4.2");
+            caps.SetCapability("deviceType", "phone");
+            caps.SetCapability("app", "sauce-storage:android.zip");
             return caps;
         }
 
@@ -504,7 +512,8 @@ namespace SharpSauce
 
             if (mobile)
             {
-                caps = createCapabilities("123456");
+                caps = createCapabilities();
+                URL = "http://" + _userName + ":" + _accessKey + "@ondemand.saucelabs.com:80/wd/hub";
             }
 
             caps.SetCapability("name", config.TestName + " on " + versionName);
@@ -749,6 +758,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
                     caps.SetCapability(CapabilityType.Version, "32");
                     break;
+                case BrowserVersions.gcbwin81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "beta");
+                    break;
                     //Windows 8 Browsers
                 case BrowserVersions.ie10win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
@@ -890,6 +903,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "32");
                     break;
+                case BrowserVersions.gcbwin8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "beta");
+                    break;
                     //Windows 7 browers
                 case BrowserVersions.ie8win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
@@ -902,6 +919,10 @@ namespace SharpSauce
                 case BrowserVersions.ie10win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "10");
+                    break;
+                case BrowserVersions.ie11win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "11");
                     break;
                 case BrowserVersions.ff3win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
@@ -1038,6 +1059,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gcbwin7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "beta");
                     break;
                 case BrowserVersions.opera11win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
@@ -1200,6 +1225,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "32");
                     break;
+                case BrowserVersions.gcbwinXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "beta");
+                    break;
                 case BrowserVersions.opera11winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "11");
@@ -1309,6 +1338,14 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "31");
                     break;
+                case BrowserVersions.gc32SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gcbSnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "beta");
+                    break;
                 case BrowserVersions.safari5SnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "5");
@@ -1325,6 +1362,14 @@ namespace SharpSauce
                 case BrowserVersions.gc31MountainLion:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
                     caps.SetCapability(CapabilityType.Version, "31");
+                    break;
+                case BrowserVersions.gc32MountainLion:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gcbMountainLion:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "beta");
                     break;
                 case BrowserVersions.safari6MountainLion:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
@@ -1605,7 +1650,7 @@ namespace SharpSauce
             caps.SetCapability("custom-data", config.CustomData);
             //TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
             TimeSpan timeout = TimeSpan.FromMinutes(_timeout);
-            var driver = new SauceLabsDriver(new Uri("http://ondemand.saucelabs.com:80/wd/hub"), caps, timeout); 
+            var driver = new SauceLabsDriver(new Uri(URL), caps, timeout); 
             return driver;
         }
 

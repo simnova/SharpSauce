@@ -23,7 +23,7 @@ namespace ExampleTestProject
         //Test setup values
         private const string baseURL = "http://localhost:4723/wd/hub"; //base url can be retrieved from selenium script
         private const string TextFile = "OS-Browser-Combo-Mobile.txt"; //name of text file containing browser/os combinations to be tested
-        private const bool mobile = true;
+        private const bool mobile = true; //Boolean value to use appium for mobile testing
 
         private const string _TestName = "Remote Mobile Test";
         private const SauceLabs.ScreenResolutions _ScreenResolution = SauceLabs.ScreenResolutions.screenDefault;
@@ -31,31 +31,18 @@ namespace ExampleTestProject
         private const string _BuildNumber = "17";
         private string[] _Tags_seq = new string[] { "Example", "mobile app", "appium" };
         private string[] _Tags_parall = new string[] { "parallel test", "Example", "extended timeout" };
-        
+
+        //The following values should only be included if a mobile application is being tested
+        private const string _App_package = "com.ECFMG";
+        private const string _Device = "Android";
+        private const string _App_activity = "com.ECFMG.MyFirstMobileApp";
+        private const string _Version = "4.2";
+        private const string _DeviceType = "phone";
+        private const string _App = "sauce-storage:android.zip";
 
         //timeoutInMinutes determines how many minutes must pass before timeout exception is thrown. For parallel testing only.
         private int timeoutInMinutes = 5;
 
-        public IWebDriver LocalTest(string browser)
-        {
-            IWebDriver driver;
-            switch (browser)
-            {
-                //The chrome driver requires that the driver be initialized with the path to the directory the chromedriver.exe is in
-                case "chrome":
-                    driver = new ChromeDriver(@"C:\Files\GitHub\SharpSauce\ExampleTestProject");
-                    break;
-                case "firefox":
-                    driver = new FirefoxDriver();
-                    break;
-                case "ie":
-                default:
-                    driver = new InternetExplorerDriver();
-                    break;
-
-            }
-            return driver;
-        }
 
         [TestMethod]
         public void ExampleAppRemote()
@@ -75,9 +62,15 @@ namespace ExampleTestProject
                     Timeout = _Timeout,
                     BuildNumber = _BuildNumber,
                     Tags = _Tags_seq,
-
+                    AppPackage = _App_package,
+                    Device = _Device,
+                    AppActivity = _App_activity,
+                    Version = _Version,
+                    DeviceType = _DeviceType,
+                    App = _App,
+                    
                 }, mobile);
-                var results = sauceLabs.RunRemoteTestCase(driver, TutorialDemoTestCase);
+                var results = sauceLabs.RunRemoteTestCase(driver, RemoteAppTestCase);
 
                 try
                 {
@@ -111,18 +104,26 @@ namespace ExampleTestProject
             caps.SetCapability("device ID", "null");
             caps.SetCapability("app", @"C:\MobileApps\MyFirstMobileApp\out\production\android\android.apk");
             RemoteWebDriver driver = new RemoteWebDriver(new Uri(baseURL), caps);
-            var results = TutorialDemoTestCase(driver);
+            var results = LocalAppTestCase(driver);
 
         }
 
         //Test Script
-        private bool TutorialDemoTestCase(RemoteWebDriver driver)
+        private bool RemoteAppTestCase(SauceLabsDriver driver)
         {
             //Insert your test script here
             
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
             return true;
 
+        }
+
+        private bool LocalAppTestCase(RemoteWebDriver driver)
+        {
+            //Insert your test script here
+
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
+            return true;
         }
 
     }

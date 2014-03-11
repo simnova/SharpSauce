@@ -344,15 +344,15 @@ namespace SharpSauce
             return results;
         }
 
-        public DesiredCapabilities createCapabilities()
+        public DesiredCapabilities createCapabilities(SauceLabsConfig config)
         {
             DesiredCapabilities caps = new DesiredCapabilities();
-            caps.SetCapability("app-package", "com.ECFMG");
-            caps.SetCapability("device", "Android");
-            caps.SetCapability("app-activity", "com.ECFMG.MyFirstMobileApp");
-            caps.SetCapability("version", "4.2");
-            caps.SetCapability("deviceType", "phone");
-            caps.SetCapability("app", "sauce-storage:android.zip");
+            caps.SetCapability("app-package", config.AppPackage);
+            caps.SetCapability("device", config.Device);
+            caps.SetCapability("app-activity", config.AppActivity);
+            caps.SetCapability("version", config.Version);
+            caps.SetCapability("deviceType", config.DeviceType);
+            caps.SetCapability("app", config.App);
             return caps;
         }
 
@@ -364,11 +364,18 @@ namespace SharpSauce
             private int _timeout;
             private string _testName;
             private string _buildNumber;
+            private string _appPackage;
+            private string _device;
+            private string _appActivity;
+            private string _version;
+            private string _deviceType;
+            private string _app;
             private string[] _tags;
             private bool _recordVideo = true;
             private bool _captureHTML = false;
             private bool _recordScreenshots = true;
             private customData _customData;
+            
 
             public ScreenResolutions ScreenResolution
             {
@@ -393,36 +400,79 @@ namespace SharpSauce
                 get { return _timeout; }
                 set { _timeout = value; }
             }
+
             public string TestName
             {
                 get { return _testName; }
                 set { _testName = value; }
             }
+
             public string BuildNumber
             {
                 get { return _buildNumber; }
                 set { _buildNumber = value; }
             }
+
+            public string AppPackage
+            {
+                get { return _appPackage; }
+                set { _appPackage = value; }
+            }
+
+            public string Device
+            {
+                get { return _device; }
+                set { _device = value; }
+            }
+
+            public string AppActivity
+            {
+                get { return _appActivity; }
+                set { _appActivity = value; }
+            }
+
+            public string Version
+            {
+                get { return _version; }
+                set { _version = value; }
+            }
+
+            public string DeviceType
+            {
+                get { return _deviceType; }
+                set { _deviceType = value; }
+            }
+
+            public string App
+            {
+                get { return _app; }
+                set { _app = value; }
+            }
+
             public string[] Tags
             {
                 get { return _tags; }
                 set { _tags = value; }
             }
+
             public bool RecordVideo
             {
                 get { return _recordVideo; }
                 set { _recordVideo = value; }
             }
+
             public bool CaptureHTML
             {
                 get { return _captureHTML; }
                 set { _captureHTML = value; }
             }
+
             public bool RecordScreenshots
             {
                 get { return _recordScreenshots; }
                 set { _recordScreenshots = value; }
             }
+
             public customData CustomData
             {
                 get { return _customData; }
@@ -512,7 +562,7 @@ namespace SharpSauce
 
             if (mobile)
             {
-                caps = createCapabilities();
+                caps = createCapabilities(config);
                 URL = "http://" + _userName + ":" + _accessKey + "@ondemand.saucelabs.com:80/wd/hub";
             }
 
@@ -1648,7 +1698,6 @@ namespace SharpSauce
             caps.SetCapability("capture-html", config.CaptureHTML);
             caps.SetCapability("record-screenshots", config.RecordScreenshots);
             caps.SetCapability("custom-data", config.CustomData);
-            //TimeSpan timeout = DateTime.Now.AddMinutes(5)-DateTime.Now;
             TimeSpan timeout = TimeSpan.FromMinutes(_timeout);
             var driver = new SauceLabsDriver(new Uri(URL), caps, timeout); 
             return driver;

@@ -34,9 +34,9 @@ namespace ExampleTestProject
 
         //The following values should only be included if a mobile application is being tested
         private const string _App_package = "com.ECFMG";
-        private const string _Device = "Android";
-        private const string _App_activity = "com.ECFMG.MyFirstMobileApp";
-        private const string _Version = "4.2";
+        private const string _Device = "Selendroid";
+        private const string _App_activity = ".MyFirstMobileApp";
+        private const string _Version = "4.3";
         private const string _DeviceType = "phone";
         private const string _App = "sauce-storage:android.zip";
 
@@ -111,12 +111,32 @@ namespace ExampleTestProject
         //Test Script
         private bool RemoteAppTestCase(SauceLabsDriver driver)
         {
+            string weight_kg = "68.0";
+            string height_cm = "172.7";
+            string weight_lb = "250";
+            string height_in = "68";
+            string expectedResult = "You Are Classified As: NORMAL";
             //Insert your test script here
             
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-            return true;
+            driver.SwitchTo().Window("WEBVIEW");
+            wait.Until(ExpectedConditions.ElementExists(By.Id("result")));
+            driver.enterValueByID("weight_in", weight_kg);
+            driver.enterValueByID("height_in", height_cm);
+            driver.FindElement(By.Id("submit")).Click();
+            System.Threading.Thread.Sleep(1000);
+            string output_metric = driver.FindElement(By.Id("classification")).Text;
+            driver.SelectDropDownValueByName("conversion", "Pounds/Inches");
+            driver.enterValueByID("weight_in", weight_lb);
+            driver.enterValueByID("height_in", height_in);
+            driver.FindElement(By.Id("submit")).Click();
+            System.Threading.Thread.Sleep(1000);
+            string output_standard = driver.FindElement(By.Id("classification")).Text;
+            bool results = (output_standard != output_metric) && (output_metric == expectedResult);
+            return results;
 
         }
+
 
         private bool LocalAppTestCase(RemoteWebDriver driver)
         {

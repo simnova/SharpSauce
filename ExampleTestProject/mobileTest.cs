@@ -104,7 +104,7 @@ namespace ExampleTestProject
             caps.SetCapability("device ID", "null");
             caps.SetCapability("app", @"C:\MobileApps\MyFirstMobileApp\out\production\android\android.apk");
             RemoteWebDriver driver = new RemoteWebDriver(new Uri(baseURL), caps);
-            var results = LocalAppTestCase(driver);
+            var results = LocalAppAlertTest(driver);
 
         }
 
@@ -113,37 +113,84 @@ namespace ExampleTestProject
         {
             string weight_kg = "68.0";
             string height_cm = "172.7";
-            string weight_lb = "250";
-            string height_in = "68";
+            string weight_lb = "150.0";
+            string height_in = "68.0";
             string expectedResult = "You Are Classified As: NORMAL";
             //Insert your test script here
             
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
             driver.SwitchTo().Window("WEBVIEW");
-            wait.Until(ExpectedConditions.ElementExists(By.Id("result")));
             driver.enterValueByID("weight_in", weight_kg);
             driver.enterValueByID("height_in", height_cm);
             driver.FindElement(By.Id("submit")).Click();
             System.Threading.Thread.Sleep(1000);
-            string output_metric = driver.FindElement(By.Id("classification")).Text;
+            string output_metric = driver.FindElement(By.Id("classificationValue")).Text;
             driver.SelectDropDownValueByName("conversion", "Pounds/Inches");
             driver.enterValueByID("weight_in", weight_lb);
             driver.enterValueByID("height_in", height_in);
             driver.FindElement(By.Id("submit")).Click();
             System.Threading.Thread.Sleep(1000);
-            string output_standard = driver.FindElement(By.Id("classification")).Text;
-            bool results = (output_standard != output_metric) && (output_metric == expectedResult);
+            string output_standard = driver.FindElement(By.Id("classificationValue")).Text;
+            driver.FindElement(By.Id("weight_in")).SendKeys(Keys.Enter);
+            bool results = (output_standard == output_metric) && (output_metric == expectedResult);
             return results;
 
         }
 
-
         private bool LocalAppTestCase(RemoteWebDriver driver)
         {
+            string weight_kg = "68.0";
+            string height_cm = "172.7";
+            string weight_lb = "150.0";
+            string height_in = "68.0";
+            string expectedResult = "You Are Classified As: NORMAL";
             //Insert your test script here
 
+            var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));    
+            System.Threading.Thread.Sleep(30000);
+            driver.SwitchTo().Window("WEBVIEW");
+            wait.Until(ExpectedConditions.ElementExists(By.Id("resultText")));
+            driver.FindElement(By.Id("weight_in")).Clear();
+            driver.FindElement(By.Id("weight_in")).SendKeys(weight_kg);
+            driver.FindElement(By.Id("height_in")).Clear();
+            driver.FindElement(By.Id("height_in")).SendKeys(height_cm);
+            driver.FindElement(By.Id("submit")).Click();
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("classificationValue")));
+            string output_metric = driver.FindElement(By.Id("classificationValue")).Text;
+            IWebElement dropDownBox = driver.FindElement(By.Name("conversion"));
+            SelectElement clickThis = new SelectElement(dropDownBox);
+            clickThis.SelectByText("Pounds/Inches");
+            driver.FindElement(By.Id("weight_in")).Clear();
+            driver.FindElement(By.Id("weight_in")).SendKeys(weight_lb);
+            driver.FindElement(By.Id("height_in")).Clear();
+            driver.FindElement(By.Id("height_in")).SendKeys(height_in);
+            driver.FindElement(By.Id("submit")).Click();
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("classificationValue")));
+            string output_standard = driver.FindElement(By.Id("classificationValue")).Text;
+            bool results = (output_metric == output_standard) && (output_metric == expectedResult);
+            return results;
+        }
+
+        private bool LocalAppAlertTest(RemoteWebDriver driver)
+        {
+            string weight_kg = "68.Error";
+            string height_cm = "173";
+            string expectedAlert = "Entered weight is not a valid number";
+            bool alertCorrect;
+
             var wait = new WebDriverWait(driver, TimeSpan.FromMinutes(1));
-            return true;
+            System.Threading.Thread.Sleep(30000);
+            driver.SwitchTo().Window("WEBVIEW");
+            wait.Until(ExpectedConditions.ElementExists(By.Id("resultText")));
+            driver.FindElement(By.Id("weight_in")).Clear();
+            driver.FindElement(By.Id("weight_in")).SendKeys(weight_kg);
+            driver.FindElement(By.Id("height_in")).Clear();
+            driver.FindElement(By.Id("height_in")).SendKeys(height_cm);
+            driver.FindElement(By.Id("submit")).Click();
+            IAlert alert = driver.SwitchTo().Alert();
+            alertCorrect = alert.Text == expectedAlert;
+            return alertCorrect;
+
         }
 
     }

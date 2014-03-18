@@ -17,8 +17,8 @@ namespace ExampleTestProject
     public class mobileTest
     {
         //UserName and AccessKey must correspond to Sauce Labs Username and Acess Key
-        private const string UserName = "matthew_walker";
-        private const string AccessKey = "feab444a-ea79-46ae-a71c-689a0d7a8078";
+        private const string UserName = "username";
+        private const string AccessKey = "access key";
 
         //Test setup values
         private const string baseURL = "http://localhost:4723/wd/hub"; //base url can be retrieved from selenium script

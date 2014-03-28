@@ -51,6 +51,7 @@ namespace SharpSauce
             ff25win81,
             ff26win81,
             ff27win81,
+            ff28win81,
             gc26win81,
             gc27win81,
             gc28win81,
@@ -58,6 +59,7 @@ namespace SharpSauce
             gc30win81,
             gc31win81,
             gc32win81,
+            gc33win81,
             gcbwin81,
 
             android4,
@@ -74,12 +76,14 @@ namespace SharpSauce
             iphone6,
             iphone61,
             iphone7,
+            iphone71,
             ipad43,
             ipad5,
             ipad51,
             ipad6,
             ipad61,
             ipad7,
+            ipad71,
 
             ie10win8,
             ff3win8,
@@ -109,6 +113,7 @@ namespace SharpSauce
             ff25win8,
             ff26win8,
             ff27win8,
+            ff28win8,
             gc26win8,
             gc27win8,
             gc28win8,
@@ -116,6 +121,7 @@ namespace SharpSauce
             gc30win8,
             gc31win8,
             gc32win8,
+            gc33win8,
             gcbwin8,
 
             ie8win7,
@@ -149,6 +155,7 @@ namespace SharpSauce
             ff25win7,
             ff26win7,
             ff27win7,
+            ff28win7,
             gc26win7,
             gc27win7,
             gc28win7,
@@ -156,6 +163,7 @@ namespace SharpSauce
             gc30win7,
             gc31win7,
             gc32win7,
+            gc33win7,
             gcbwin7,
             opera11win7,
             opera12win7,
@@ -191,6 +199,7 @@ namespace SharpSauce
             ff25winXP,
             ff26winXP,
             ff27winXP,
+            ff28winXP,
             gc26winXP,
             gc27winXP,
             gc28winXP,
@@ -198,6 +207,7 @@ namespace SharpSauce
             gc30winXP,
             gc31winXP,
             gc32winXP,
+            gc33winXP,
             gcbwinXP,
             opera11winXP,
             opera12winXP,
@@ -225,10 +235,14 @@ namespace SharpSauce
             ff23SnowLeopard,
             ff24SnowLeopard,
             ff25SnowLeopard,
+            ff26SnowLeopard,
+            ff27SnowLeopard,
+            ff28SnowLeopard,
             gc27SnowLeopard,
             gc28SnowLeopard,
             gc31SnowLeopard,
             gc32SnowLeopard,
+            gc33SnowLeopard,
             gcbSnowLeopard,
             safari5SnowLeopard,
 
@@ -236,6 +250,7 @@ namespace SharpSauce
             gc28MountainLion,
             gc31MountainLion,
             gc32MountainLion,
+            gc33MountainLion,
             gcbMountainLion,
             safari6MountainLion,
 
@@ -262,7 +277,11 @@ namespace SharpSauce
             ff24Mavericks,
             ff25Mavericks,
             ff26Mavericks,
+            ff27Mavericks,
+            ff28Mavericks,
             gc31Mavericks,
+            gc32Mavericks,
+            gc33Mavericks,
             safari7Mavericks,
 
             ff3linux,
@@ -290,6 +309,7 @@ namespace SharpSauce
             ff25linux,
             ff26linux,
             ff27linux,
+            ff28linux,
             opera12linux,
             gc26linux,
             gc27linux,
@@ -297,7 +317,8 @@ namespace SharpSauce
             gc29linux,
             gc30linux,
             gc31linux,
-            gc32linux
+            gc32linux,
+            gc33linux
             // ReSharper restore InconsistentNaming
 
         }
@@ -637,6 +658,11 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
                     caps.SetCapability(CapabilityType.Version, "7");
                     break;
+                case BrowserVersions.iphone71:
+                    caps.SetCapability(CapabilityType.BrowserName, "iphone");
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "7.1");
+                    break;
                 case BrowserVersions.ipad43:
                     caps.SetCapability(CapabilityType.BrowserName, "ipad");
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
@@ -667,6 +693,7 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
                     caps.SetCapability(CapabilityType.Version, "7");
                     break;
+                    
                     //Windows 8.1 browsers
                 case BrowserVersions.ie11win81:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
@@ -780,6 +807,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.ff28win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc26win81:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
                     caps.SetCapability(CapabilityType.Version, "26");
@@ -807,6 +838,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32win81:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33win81:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbwin81:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8.1");
@@ -925,6 +960,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.ff28win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc26win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "26");
@@ -952,6 +991,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32win8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33win8:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 8");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbwin8:
                     caps.SetCapability(CapabilityType.Platform, "Windows 8");
@@ -1082,6 +1125,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.ff28win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc26win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "26");
@@ -1109,6 +1156,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32win7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33win7:
+                    caps.SetCapability(CapabilityType.Platform, "Windows 7");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbwin7:
                     caps.SetCapability(CapabilityType.Platform, "Windows 7");
@@ -1247,6 +1298,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.ff28winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc26winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "26");
@@ -1274,6 +1329,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32winXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33winXP:
+                    caps.SetCapability(CapabilityType.Platform, "Windows XP");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbwinXP:
                     caps.SetCapability(CapabilityType.Platform, "Windows XP");
@@ -1376,6 +1435,18 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "25");
                     break;
+                case BrowserVersions.ff26SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "26");
+                    break;
+                case BrowserVersions.ff27SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "27");
+                    break;
+                case BrowserVersions.ff28SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc27SnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "");
@@ -1391,6 +1462,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32SnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33SnowLeopard:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbSnowLeopard:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.6");
@@ -1416,6 +1491,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32MountainLion:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33MountainLion:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.gcbMountainLion:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.8");
@@ -1518,9 +1597,25 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
                     caps.SetCapability(CapabilityType.Version, "26");
                     break;
+                case BrowserVersions.ff27Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "27");
+                    break;
+                case BrowserVersions.ff28Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc31Mavericks:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
                     caps.SetCapability(CapabilityType.Version, "31");
+                    break;
+                case BrowserVersions.gc32Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33Mavericks:
+                    caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.safari7Mavericks:
                     caps.SetCapability(CapabilityType.Platform, "OS X 10.9");
@@ -1627,6 +1722,10 @@ namespace SharpSauce
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "27");
                     break;
+                case BrowserVersions.ff28linux:
+                    caps.SetCapability(CapabilityType.Platform, "Linux");
+                    caps.SetCapability(CapabilityType.Version, "28");
+                    break;
                 case BrowserVersions.gc26linux:
                     caps.SetCapability(CapabilityType.Platform, "Linux");
                     caps.SetCapability(CapabilityType.Version, "26");
@@ -1654,6 +1753,10 @@ namespace SharpSauce
                 case BrowserVersions.gc32linux:
                     caps.SetCapability(CapabilityType.Platform, "linux");
                     caps.SetCapability(CapabilityType.Version, "32");
+                    break;
+                case BrowserVersions.gc33linux:
+                    caps.SetCapability(CapabilityType.Platform, "linux");
+                    caps.SetCapability(CapabilityType.Version, "33");
                     break;
                 case BrowserVersions.opera12linux:
                     caps.SetCapability(CapabilityType.Platform, "Linux");

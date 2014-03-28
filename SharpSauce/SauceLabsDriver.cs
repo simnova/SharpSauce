@@ -36,6 +36,31 @@ namespace SharpSauce
             }
         }
 
+        public IAlert WaitGetAlert( int waitTimeInSeconds = 5)
+        {
+            IAlert alert = null;
+
+            var wait = new WebDriverWait(this, TimeSpan.FromSeconds(waitTimeInSeconds));
+
+            try
+            {
+                alert = wait.Until(d =>
+                    {
+                        try
+                        {
+                            return this.SwitchTo().Alert();
+                        }
+                        catch (NoAlertPresentException)
+                        {
+                            return null;
+                        }
+                    });
+
+            }
+            catch (WebDriverTimeoutException) { alert = null; }
+
+            return alert;
+        }
 
         //Login to a page by given username and password; Uses IDs to locate webelements
         //note: This method logs in by pressing "ENTER", it does not click a button.
